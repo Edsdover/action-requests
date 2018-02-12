@@ -1,0 +1,22 @@
+<form #resolutionForm="ngForm">
+  <h1 mat-dialog-title>Resolution</h1>
+  <div mat-dialog-content>
+    <p>Please describe the steps taken to resolve this action request.</p>
+    <mat-form-field>
+      <textarea matInput
+                matTextareaAutosize
+                matAutosizeMinRows="5"
+                [(ngModel)]="data.resolution"
+                name="resolution"
+                placeholder="Resolution..."
+                required>
+      </textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">CANCEL</button>
+    <button mat-raised-button [disabled]="!resolutionForm.form.valid" [mat-dialog-close]="data.resolution" color="warn">
+      CLOSE
+    </button>
+  </div>
+</form>

@@ -1,0 +1,8 @@
+<div class="request-form-wrapper">
+  <app-request-form *ngIf="request"
+                    [request]="request"
+                    [showBackButton]="true"
+                    [title]="'Update Action Request'"
+                    (onSave)="save($event)">
+  </app-request-form>
+</div>

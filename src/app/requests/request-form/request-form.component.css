@@ -1,0 +1,61 @@
+.drop-message {
+  display: block;
+  color: #444;
+  font-size: 1.2em;
+  font-weight: 400;
+  line-height: 120px;
+  text-align: center;
+}
+
+.input-wrapper {
+  display: block;
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 120px;
+  margin: 20px;
+}
+
+.input-wrapper input {
+  display: none;
+}
+
+.line {
+  display: block;
+}
+
+.photo {
+  height: 120px;
+  width: 120px;
+  margin-left: 10px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.progress-bar {
+  width: 100%;
+}
+
+.request-form /deep/ .mat-card-actions {
+  margin-bottom: -16px;
+}
+
+.request-form /deep/ .mat-card-content>:first-child {
+  margin-top: 20px;
+}
+
+.request-form /deep/ .mat-card-header-text {
+  margin: 0;
+}
+
+.request-form .status {
+  margin-top: 32px;
+}
+
+.request-form .urgent {
+  margin-left: 20px;
+}
+
+.request-form .wide-input {
+  min-width: 280px;
+}

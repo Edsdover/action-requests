@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+
+a,
+a:visited {
+  color: var(--theme-color-primary);
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

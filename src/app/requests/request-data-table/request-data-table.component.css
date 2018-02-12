@@ -1,0 +1,66 @@
+.cell-code.mat-cell,
+.cell-code.mat-header-cell {
+  max-width: 80px;
+}
+
+.cell-action-plan,
+.cell-category,
+.cell-photos,
+.cell-sales-order,
+.cell-status {
+  max-width: 120px;
+}
+
+.data-table-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.data-table-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.empty-search-results {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.mat-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-row {
+  cursor: pointer;
+}
+
+.mat-row:hover {
+  background-color: antiquewhite;
+}
+
+.mat-table {
+  overflow: auto;
+}
+
+.request-data-table {
+  padding: 20px;
+}
+
+.overflow-visibile {
+  overflow: visible;
+}
+
+.urgent {
+  display: flex;
+  height: 0;
+  font-size: 18px;
+  margin-left: -24px;
+}

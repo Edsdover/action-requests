@@ -1,0 +1,16 @@
+<form class="assignee-autocomplete-form">
+  <mat-form-field>
+    <input type="text" placeholder="Email address" matInput [formControl]="assigneeControl" [matAutocomplete]="auto" [ngModel]="assignee">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button mat-mini-fab matTooltip="Save" (click)="save()" class="save-button">
+    <mat-icon>done</mat-icon>
+  </button>
+  <button mat-mini-fab matTooltip="Cancel" (click)="cancel()" color="white" type="button">
+    <mat-icon>clear</mat-icon>
+  </button>
+</form>

@@ -1,0 +1,10 @@
+.column {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.last-column {
+  margin-left: auto;
+  text-align: end;
+}

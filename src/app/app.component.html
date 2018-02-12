@@ -1,0 +1,13 @@
+<div class="app-container">
+  <mat-toolbar class="header">
+    <span class="logo-wrapper" (click)="goHome()">
+      <mat-icon class="logo theme-background-primary">toys</mat-icon>
+      <span class="page-title">{{ title }}</span>
+    </span>
+
+    <button mat-button class="login-button" (click)="gotoRequests()">VIEW ALL</button>
+  </mat-toolbar>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

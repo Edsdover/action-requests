@@ -1,0 +1,99 @@
+<mat-card *ngIf="request" class="request-detail">
+  <mat-card-title-group>
+    <mat-card-title>
+      Action Request {{ actionRequestService.removePrefix(request.humanReadableCode) }}
+      <mat-icon *ngIf="request.isUrgent" matTooltip="Urgent" matTooltipPosition="after" color="warn" class="urgent">
+        error
+      </mat-icon>
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ request.createdAt | date:'mediumDate' }} {{ request.createdAt | date:'shortTime' | lowercase }}
+    </mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-content>
+    <h3>Reporter</h3>
+    <p [class.less-visible]="!request.reporter">
+      {{ request.reporter || 'No reporter name provided.' }}
+    </p>
+
+    <h3>Assignee</h3>
+    <p [class.less-visible]="!request.assignee" [hidden]="assigneeEditable">
+      {{ request.assignee || 'No assignee.' }}
+      <button mat-mini-fab matTooltip="Reassign" (click)="assigneeEditable = !assigneeEditable" class="reassign-button">
+        <mat-icon>autorenew</mat-icon>
+      </button>
+    </p>
+    <p>
+      <app-assignee-autocomplete
+        *ngIf="assigneeEditable"
+        [assignee]="request.assignee"
+        (onCancel)="assigneeEditable = false"
+        (onSave)="reassign($event)">
+      </app-assignee-autocomplete>
+    </p>
+
+    <h3>Sales Order</h3>
+    <p [class.less-visible]="!request.salesOrderNumber">
+      SO# {{ (request.salesOrderNumber | uppercase) || 'Unknown' }}
+    </p>
+
+    <h3>Category</h3>
+    <p [class.less-visible]="!request.category">
+      {{ (request.category | titlecase) || 'No category provided.' }}
+    </p>
+
+    <h3>Discrepancy</h3>
+    <p [class.less-visible]="!request.discrepancy">
+      {{ request.discrepancy || 'No discrepancy information provided.' }}
+    </p>
+
+    <h3>Suggested Remedy</h3>
+    <p [class.less-visible]="!request.suggestedRemedy">
+      {{ request.suggestedRemedy || 'No suggested remedy provided.' }}
+    </p>
+
+    <h3 *ngIf="request.photoUrls && request.photoUrls.length">Photos</h3>
+    <div *ngIf="request.photoUrls && request.photoUrls.length" class="photos-wrapper">
+      <span *ngFor="let photoUrl of request.photoUrls">
+        <a href="{{ photoUrl }}" target="_blank">
+          <img class="photo" src="{{ photoUrl }}">
+        </a>
+      </span>
+    </div>
+
+    <h3>Status</h3>
+    <p [class.less-visible]="!request.status">
+      {{ (request.status | titlecase) || 'No status available.' }}
+    </p>
+
+    <h3>Approved Plan of Action</h3>
+    <p [class.less-visible]="!request.approvedActionPlan">
+      {{ request.approvedActionPlan || 'No action plan available.' }}
+    </p>
+
+    <h3>ECN</h3>
+    <p [class.less-visible]="!request.ecn">
+      {{ request.ecn || 'No ECN provided.' }}
+    </p>
+
+    <div *ngIf="request.status === 'resolved' && request.resolution">
+      <h3>Resolution</h3>
+      <p [class.less-visible]="!request.resolution">
+        {{ request.resolution || 'No resolution provided.' }}
+      </p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="action-buttons" align="end">
+    <button mat-button (click)="goBack()">BACK</button>
+    <button mat-raised-button color="accent" (click)="update()">UPDATE</button>
+    <button *ngIf="request.status !== 'resolved'" mat-raised-button color="warn" (click)="closePrompt()">RESOLVE</button>
+  </mat-card-actions>
+</mat-card>
+
+<div *ngIf="loading">
+  <p class="standalone-message">Loading...</p>
+</div>
+
+<div *ngIf="!loading && !request">
+  <p class="standalone-message">Action Request not found.</p>
+</div>

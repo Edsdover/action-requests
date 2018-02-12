@@ -1,0 +1,133 @@
+<mat-card class="request-form">
+  <form (ngSubmit)="save()" #requestForm="ngForm">
+    <mat-card-header class="request-form-title">
+      {{ title }}
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="line">
+        <mat-input-container class="wide-input">
+          <input matInput
+          [(ngModel)]="request.reporter"
+          name="name"
+          placeholder="Reporter Name"
+          required>
+        </mat-input-container>
+      </div>
+
+      <div class="line" *ngIf="request.key">
+        <mat-input-container class="wide-input">
+          <input matInput
+          [(ngModel)]="request.assignee"
+          name="assignee"
+          placeholder="Assignee Email">
+        </mat-input-container>
+      </div>
+
+      <div class="line">
+        <mat-input-container class="wide-input">
+          <input matInput
+                 [(ngModel)]="request.salesOrderNumber"
+                 name="salesOrderNumber"
+                 placeholder="SO#"
+                 required>
+        </mat-input-container>
+      </div>
+
+      <div class="line">
+        <mat-form-field>
+          <mat-select [(ngModel)]="request.category" name="category" placeholder="Category" required>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="request.isUrgent" name="isActive" color="warn" class="urgent">
+          Urgent
+        </mat-checkbox>
+      </div>
+
+      <mat-input-container class="line">
+        <textarea matInput
+               matTextareaAutosize
+               [matAutosizeMinRows]="5"
+               [(ngModel)]="request.discrepancy"
+               name="discrepancy"
+               placeholder="Discrepancy"
+               required>
+        </textarea>
+      </mat-input-container>
+
+      <mat-input-container class="line">
+        <textarea matInput
+               matTextareaAutosize
+               [matAutosizeMinRows]="5"
+               [(ngModel)]="request.suggestedRemedy"
+               name="suggestedRemedy"
+               placeholder="Suggested Remedy"
+               required>
+        </textarea>
+      </mat-input-container>
+
+      <div *ngIf="currentUpload">
+        <progress class="progress-bar" min=1 max=100 value="{{ currentUpload?.progress }}"></progress>
+        Progress: {{ currentUpload?.progress | number: '1.0-1' }}% Complete
+      </div>
+
+      <div class="upload-form">
+        <label class="input-wrapper">
+          <span class="drop-message">
+            Click to upload pictures
+          </span>
+          <input type="file" accept="image/*" class="button" (change)="processFiles($event)" multiple>
+        </label>
+      </div>
+
+      <div class="photos-wrapper">
+        <span *ngFor="let upload of uploads">
+          <img class="photo" *ngIf="upload.url" src="{{ upload.url }}">
+        </span>
+      </div>
+
+      <div class="line">
+        <mat-form-field class="status">
+          <mat-select [(ngModel)]="request.status" name="status" placeholder="Status" required>
+            <mat-option *ngFor="let status of statuses" [value]="status">
+              {{ status | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-input-container class="line">
+        <textarea matInput
+               matTextareaAutosize
+               [matAutosizeMinRows]="5"
+               [(ngModel)]="request.approvedActionPlan"
+               name="approvedActionPlan"
+               placeholder="Approved Plan of Action">
+        </textarea>
+      </mat-input-container>
+
+      <div class="line">
+        <mat-input-container>
+          <input matInput
+                 [(ngModel)]="request.ecn"
+                 name="ecn"
+                 placeholder="ECN">
+        </mat-input-container>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button *ngIf="showBackButton" mat-button type="button" (click)="goBack()">CANCEL</button>
+
+      <button mat-raised-button
+              color="accent"
+              [disabled]="!requestForm.form.valid"
+              type="submit">
+        {{ showBackButton ? 'SAVE' : 'SUBMIT' }}
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

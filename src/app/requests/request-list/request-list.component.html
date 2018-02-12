@@ -1,0 +1,23 @@
+<div class="request-list">
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <mat-nav-list dense>
+    <mat-list-item *ngFor="let request of requests$ | async" (click)="gotoRequest(request)">
+      <p mat-line class="request-line" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-icon mat-list-icon align="start">assignment</mat-icon>
+        <span class="column request-order-number" fxFlex="0 0 35px">
+          {{ request.salesOrderNumber }}
+        </span>
+        <span class="column request-category" fxFlex="0 1 180px">
+          {{ request.category | titlecase }}
+        </span>
+        <span class="column request-reporter" fxFlex="0 1 200px">
+          {{ request.reporter }}
+        </span>
+        <span class="column request-status last-column" fxFlex="0 1 180px">
+          {{ request.status | titlecase }}
+        </span>
+      </p>
+    </mat-list-item>
+  </mat-nav-list>
+</div>

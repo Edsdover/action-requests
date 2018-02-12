@@ -1,0 +1,114 @@
+<div class="request-data-table">
+  <mat-card class="data-table-header">
+    <mat-form-field>
+      <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </mat-card>
+
+  <mat-card class="data-table-container">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Code Column -->
+      <ng-container matColumnDef="humanReadableCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-code"> No. </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-code" [class.overflow-visibile]="actionRequest.isUrgent && urgentColumn == 'humanReadableCode'">
+          <mat-icon *ngIf="actionRequest.isUrgent && urgentColumn == 'humanReadableCode'" matTooltip="Urgent" matTooltipPosition="after" color="warn" class="urgent">
+            error
+          </mat-icon>
+          {{ actionRequest.humanReadableCode }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Sales Order Number Column -->
+      <ng-container matColumnDef="salesOrderNumber">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-sales-order"> Sales Order </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-sales-order" [class.overflow-visibile]="actionRequest.isUrgent && urgentColumn == 'salesOrderNumber'">
+          <mat-icon *ngIf="actionRequest.isUrgent && urgentColumn == 'salesOrderNumber'" matTooltip="Urgent" matTooltipPosition="after" color="warn" class="urgent">
+            error
+          </mat-icon>
+          SO# {{ actionRequest.salesOrderNumber | uppercase }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Created At Column -->
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest">
+          {{ actionRequest.createdAt | date:'shortDate' }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Created At Verbose Column -->
+      <ng-container matColumnDef="createdAtVerbose">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest">
+          {{ actionRequest.createdAt | date:'mediumDate' }} {{ actionRequest.createdAt | date:'shortTime' | lowercase }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Reporter Column -->
+      <ng-container matColumnDef="reporter">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Reporter </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.reporter | titlecase }} </mat-cell>
+      </ng-container>
+
+      <!-- Assignee Column -->
+      <ng-container matColumnDef="assignee">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Assignee </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.assignee }} </mat-cell>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-category"> Category </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-category"> {{ actionRequest.category | titlecase }} </mat-cell>
+      </ng-container>
+
+      <!-- Photo Hashes Column -->
+      <ng-container matColumnDef="photoHashes">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-photos"> Photos </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-photos">
+          <mat-icon *ngIf="actionRequest.photoHashes && actionRequest.photoHashes.length">done</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Approved Action Plan Column -->
+      <ng-container matColumnDef="approvedActionPlan">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-action-plan"> Action Plan </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-action-plan">
+          <mat-icon *ngIf="actionRequest.approvedActionPlan">done</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-status"> Status </mat-header-cell>
+        <mat-cell *matCellDef="let actionRequest" class="cell-status"> {{ actionRequest.status | titlecase }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let actionRequest; columns: displayedColumns;" (click)="gotoRequest(actionRequest)"></mat-row>
+    </mat-table>
+
+    <div class="empty-search-results" *ngIf="loading">
+      Loading...
+    </div>
+
+    <div class="empty-search-results" *ngIf="!loading && dataSource.data && dataSource.data.length === 0">
+      No action requests available.
+    </div>
+
+    <div class="empty-search-results" *ngIf="dataSource.data && dataSource.data.length > 0 && dataSource.filter && dataSource.filteredData.length === 0">
+      No action requests found matching search filter.
+    </div>
+
+    <mat-paginator #paginator
+                   [length]="dataSource.data && dataSource.data.length || 0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </mat-card>
+</div>
