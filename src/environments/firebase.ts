@@ -3,6 +3,6 @@ export const firebaseConfig = {
   authDomain: 'example-backend-f074f.firebaseapp.com',
   databaseURL: 'https://example-backend-f074f.firebaseio.com',
   projectId: 'example-backend-f074f',
-  storageBucket: '',
+  storageBucket: 'gs://example-backend-f074f.appspot.com/',
   messagingSenderId: '766966507448'
 };
