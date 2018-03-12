@@ -2,8 +2,6 @@
 
 Action Requests app for Premier Pump & Power, LLC.
 
-<https://action-requests.premier-pump.io>
-
 ## Requirements
 
 Create a [Firebase](http://firebase.google.com) account and a [Mailgun](https://www.mailgun.com) account.
