@@ -8,7 +8,7 @@ import { _throw as observableThrow } from 'rxjs/observable/throw';
 
 @Injectable()
 export class AngularFirestoreService {
-  // current timestamp (time since the Unix epoch, in milliseconds), as determined server-side by Firebase
+  // current timestamp (Unix epoch, in milliseconds) as determined server-side by Firebase
   timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
   constructor(private afs: AngularFirestore) { }

@@ -1,0 +1,12 @@
+*_bak*
+*_min*
+.package-lock.json
+.runtimeconfig.json
+index.js
+node_modules/
+yarn-error.log
+
+# compiled output
+/dist
+/tmp
+/out-tsc
