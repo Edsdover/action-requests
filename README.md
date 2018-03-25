@@ -1,6 +1,6 @@
 # Action Request
 
-Action Requests app for Premier Pump & Power, LLC.
+Action Requests app for reporting on live incidents and issues.
 
 ## Requirements
 
@@ -45,10 +45,23 @@ echo "
 " > ./src/environments/firebase.ts
 ```
 
-Generate a Mailgun API key and register it with Firebase, as follows.
+Configure a Mailgun domain and API key with Firebase, as follows.
 
 ```shell
+firebase functions:config:set mailgun.domain="<MAILGUN_DOMAIN>"
 firebase functions:config:set mailgun.apikey="<MAILGUN_API_KEY>"
+```
+
+Finally, configure your notification preferences.
+
+```shell
+firebase functions:config:set notifications.defaultToAddress="manager@example.com"
+firebase functions:config:set notifications.ccAddresses="employee@example.com,manager@example.com"
+firebase functions:config:set notifications.bccAddresses="programmer@example.com"
+firebase functions:config:set notifications.phoneNumber="4008675309@vtext.com"
+firebase functions:config:set notifications.defaultFromAddress="AR Bot <noreply@example.com>"
+firebase functions:config:set notifications.requestsUrl="https://action.example.com/requests"
+firebase functions:config:set notifications.emailPrefix="AR"
 ```
 
 ## Development server

@@ -1,0 +1,33 @@
+{
+  "name": "email-notification-functions",
+  "description": "Send email notifications using database triggers",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "lint": "tslint -p ./tsconfig.json 'src/**/*.ts'",
+    "logs": "firebase functions:log",
+    "serve": "yarn firebase:build && firebase serve --only functions",
+    "shell": "yarn firebase:build && firebase experimental:functions:shell",
+    "start": "yarn shell",
+    "firebase:build": "yarn && yarn build",
+    "firebase:deploy": "yarn firebase:build && firebase deploy --project staging --only functions",
+    "firebase:deploy-production": "yarn firebase:build && firebase deploy --project production --only functions"
+  },
+  "dependencies": {
+    "mailgun-js": "0.13.1",
+    "firebase-admin": "5.6.0",
+    "firebase-functions": "0.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "8.0.57",
+    "awesome-typescript-loader": "3.4.1",
+    "ts-loader": "3.2.0",
+    "ts-node": "3.3.0",
+    "tslint": "5.8.0",
+    "typescript": "2.6.2",
+    "webpack": "3.10.0",
+    "webpack-node-externals": "1.6.0"
+  }
+}
