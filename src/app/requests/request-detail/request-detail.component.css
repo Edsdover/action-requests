@@ -4,6 +4,7 @@ h3 {
 
 .notes-area {
   white-space: pre-line;
+  margin-top: -16px;
 }
 
 .less-visible {
