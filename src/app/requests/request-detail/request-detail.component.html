@@ -43,12 +43,12 @@
     </p>
 
     <h3>Discrepancy</h3>
-    <p class="notes-area" [class.less-visible]="!request.discrepancy">
+    <p class="preserve-newlines" [class.less-visible]="!request.discrepancy">
       {{ request.discrepancy || 'No discrepancy information provided.' }}
     </p>
 
     <h3>Suggested Remedy</h3>
-    <p class="notes-area" [class.less-visible]="!request.suggestedRemedy">
+    <p class="preserve-newlines" [class.less-visible]="!request.suggestedRemedy">
       {{ request.suggestedRemedy || 'No suggested remedy provided.' }}
     </p>
 
@@ -67,7 +67,7 @@
     </p>
 
     <h3>Approved Plan of Action</h3>
-    <p class="notes-area" [class.less-visible]="!request.approvedActionPlan">
+    <p class="preserve-newlines" [class.less-visible]="!request.approvedActionPlan">
       {{ request.approvedActionPlan || 'No action plan available.' }}
     </p>
 

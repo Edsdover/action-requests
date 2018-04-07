@@ -2,11 +2,6 @@ h3 {
   font-weight: 500;
 }
 
-.notes-area {
-  white-space: pre-line;
-  margin-top: -16px;
-}
-
 .less-visible {
   opacity: 0.67;
 }
@@ -21,6 +16,11 @@ h3 {
   margin-left: 10px;
   margin-right: 10px;
   object-fit: cover;
+}
+
+.preserve-newlines {
+  white-space: pre-line;
+  margin-top: -16px;
 }
 
 .reassign-button {

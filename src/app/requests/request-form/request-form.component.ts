@@ -20,6 +20,25 @@ export class RequestFormComponent implements OnInit {
   currentUpload: Upload;
   photos: Observable<Upload>[];
   uploads: Upload[] = [];
+  isSaving = false;
+
+  acceptedFileTypes = [
+    'application/msword',
+    'application/pdf',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/xml',
+    'image/*',
+    'text/csv',
+    '.csv',
+    '.doc',
+    '.docx',
+    '.pdf',
+    '.txt',
+    '.xls',
+    '.xlsx'
+  ];
 
   @Input() request: ActionRequest;
   @Input() showBackButton = false;
@@ -66,13 +85,13 @@ export class RequestFormComponent implements OnInit {
 
     for (const file of selectedFiles) {
       const upload = new Upload(file);
-      if (upload.file.type === "application/pdf") {
-        upload.thumbUrl = "assets/pdf.jpg";
-      } else if (upload.file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        upload.thumbUrl = "assets/word.png";
-      } else {
-        upload.thumbUrl = upload.url;
-      }
+      // if (upload.file.type === 'application/pdf') {
+      //   upload.thumbUrl = 'assets/pdf.jpg';
+      // } else if (upload.file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      //   upload.thumbUrl = 'assets/word.png';
+      // } else {
+      //   upload.thumbUrl = upload.url;
+      // }
 
       this.currentUpload = upload;
       this.uploadService.push(upload);
@@ -84,34 +103,38 @@ export class RequestFormComponent implements OnInit {
   }
 
   save(): void {
+    this.isSaving = true;
+
     for (const upload of this.uploads) {
-      if (upload.file.type === "application/pdf") {
-        upload.thumbUrl = "assets/pdf.jpg";
-        this.request.photoUrls.push("assets/pdf.jpg");
-      } else if (upload.file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        upload.thumbUrl = "assets/word.png";
-        this.request.photoUrls.push("assets/word.png");
-      } else {
-        upload.thumbUrl = upload.url;
-        this.request.photoUrls.push(upload.url);
-      }
+      // if (upload.file.type === 'application/pdf') {
+      //   upload.thumbUrl = 'assets/pdf.jpg';
+      //   this.request.photoUrls.push('assets/pdf.jpg');
+      // } else if (upload.file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      //   upload.thumbUrl = 'assets/word.png';
+      //   this.request.photoUrls.push('assets/word.png');
+      // } else {
+      //   upload.thumbUrl = upload.url;
+      //   this.request.photoUrls.push(upload.url);
+      // }
+      this.request.photoUrls.push(upload.url);
     }
 
     this.onSave.emit(this.request);
 
-    // HACK: reset form after 1 second to allow time for the Firebase save to complete
+    // HACK: reset form after 1.5 seconds to allow time for the Firebase save to complete
 
     setTimeout(() => {
       this.currentUpload = this.photos = undefined;
       this.uploads = [];
       this.request = new ActionRequest();
       this.requestForm.resetForm();
-    }, 1000);
+    }, 1400);
 
     setTimeout(() => {
+      this.isSaving = false;
       this.request.status = null;
       this.request.status = 'new';
-    }, 1100);
+    }, 1500);
   }
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { first } from 'rxjs/operators';
+import { timer } from 'rxjs/observable/timer';
+import { first, takeUntil } from 'rxjs/operators';
 
 import { AngularFirestoreService } from '../../shared';
 import { ActionRequest } from './action-request.model';
@@ -33,7 +34,8 @@ export class ActionRequestService {
 
   create(actionRequest: ActionRequest): Promise<ActionRequest> {
     return this
-      .incrementCounter()
+      ._incrementCounter(300)
+      .then(() => this._incrementCounter())
       .then(counter => this.afs.add<ActionRequest>(
         this.actionRequestsPath, {
           ...actionRequest,
@@ -63,10 +65,12 @@ export class ActionRequestService {
     return +code.split(this.prefix)[1];
   }
 
-  private incrementCounter(): Promise<number> {
+  _incrementCounter(delay = 1000): Promise<number> {
     return this.afs
-      .collection<ActionRequest>(this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(1))
-      .pipe(first())
+      .collection<ActionRequest>(this.actionRequestsPath, ref => ref.orderBy('humanReadableCode', 'desc').limit(1))
+      .pipe(
+        takeUntil(timer(delay))
+      )
       .toPromise()
       .then(actionRequests => (actionRequests && actionRequests.length)
         ? this.removePrefix(actionRequests[0].humanReadableCode) + 1

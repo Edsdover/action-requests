@@ -59,3 +59,9 @@
 .request-form .wide-input {
   min-width: 280px;
 }
+
+@media (max-width: 480px) {
+  .hide-on-small-screens {
+    display: none;
+  }
+}
