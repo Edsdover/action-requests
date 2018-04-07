@@ -55,13 +55,13 @@ firebase functions:config:set mailgun.apikey="<MAILGUN_API_KEY>"
 Finally, configure your notification preferences.
 
 ```shell
-firebase functions:config:set notifications.defaultToAddress="manager@example.com"
-firebase functions:config:set notifications.ccAddresses="employee@example.com,manager@example.com"
-firebase functions:config:set notifications.bccAddresses="programmer@example.com"
-firebase functions:config:set notifications.phoneNumber="4008675309@vtext.com"
-firebase functions:config:set notifications.defaultFromAddress="AR Bot <noreply@example.com>"
-firebase functions:config:set notifications.requestsUrl="https://action.example.com/requests"
-firebase functions:config:set notifications.emailPrefix="AR"
+firebase functions:config:set notifications.default_to_address="manager@example.com"
+firebase functions:config:set notifications.cc_addresses="employee@example.com,manager@example.com"
+firebase functions:config:set notifications.bcc_addresses="programmer@example.com"
+firebase functions:config:set notifications.phone_number="4008675309@vtext.com"
+firebase functions:config:set notifications.default_from_address="AR Bot <noreply@example.com>"
+firebase functions:config:set notifications.requests_url="https://action.example.com/requests"
+firebase functions:config:set notifications.email_prefix="AR"
 ```
 
 ## Development server
