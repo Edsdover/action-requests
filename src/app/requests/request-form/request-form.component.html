@@ -77,15 +77,15 @@
       <div class="upload-form">
         <label class="input-wrapper">
           <span class="drop-message">
-            Click to upload pictures
+            Click to upload pictures, PDF files, or word documents
           </span>
-          <input type="file" accept="image/*" class="button" (change)="processFiles($event)" multiple>
+          <input type="file" accept="image/*, .pdf, .doc, .docx, .xml, application/msword" class="button" (change)="processFiles($event)" multiple>
         </label>
       </div>
 
       <div class="photos-wrapper">
         <span *ngFor="let upload of uploads">
-          <img class="photo" *ngIf="upload.url" src="{{ upload.url }}">
+          <img class="photo" *ngIf="upload" src="{{ upload.thumbUrl || upload.url }}">
         </span>
       </div>
 
