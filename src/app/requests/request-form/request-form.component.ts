@@ -66,6 +66,13 @@ export class RequestFormComponent implements OnInit {
 
     for (const file of selectedFiles) {
       const upload = new Upload(file);
+      if (upload.file.type === "application/pdf") {
+        upload.thumbUrl = "assets/pdf.jpg";
+      } else if (upload.file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        upload.thumbUrl = "assets/word.png";
+      } else {
+        upload.thumbUrl = upload.url;
+      }
 
       this.currentUpload = upload;
       this.uploadService.push(upload);
@@ -78,7 +85,16 @@ export class RequestFormComponent implements OnInit {
 
   save(): void {
     for (const upload of this.uploads) {
-      this.request.photoUrls.push(upload.url);
+      if (upload.file.type === "application/pdf") {
+        upload.thumbUrl = "assets/pdf.jpg";
+        this.request.photoUrls.push("assets/pdf.jpg");
+      } else if (upload.file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        upload.thumbUrl = "assets/word.png";
+        this.request.photoUrls.push("assets/word.png");
+      } else {
+        upload.thumbUrl = upload.url;
+        this.request.photoUrls.push(upload.url);
+      }
     }
 
     this.onSave.emit(this.request);

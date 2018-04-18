@@ -65,7 +65,7 @@ export class ActionRequestService {
 
   private incrementCounter(): Promise<number> {
     return this.afs
-      .collection<ActionRequest>(this.actionRequestsPath, ref => ref.orderBy('humanReadableCode', 'desc').limit(1))
+      .collection<ActionRequest>(this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(1))
       .pipe(first())
       .toPromise()
       .then(actionRequests => (actionRequests && actionRequests.length)
