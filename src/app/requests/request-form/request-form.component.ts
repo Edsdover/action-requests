@@ -7,6 +7,7 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatMap';
 import { Observable } from 'rxjs/Observable';
+import { UploadEvent, UploadFile, FileSystemFileEntry } from 'ngx-file-drop';
 
 import { Upload, UploadService } from '../../uploads';
 import { ActionRequest } from '../shared';
@@ -73,6 +74,15 @@ export class RequestFormComponent implements OnInit {
     this.location.back();
   }
 
+  droppedFiles(event: UploadEvent): void {
+    for (const droppedFile of event.files) {
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => this.uploadFile(file));
+      }
+    }
+  }
+
   processFiles(event): void {
     const selectedFiles = event.target.files;
 
@@ -81,13 +91,17 @@ export class RequestFormComponent implements OnInit {
     }
 
     for (const file of selectedFiles) {
-      const upload = new Upload(file);
-
-      this.currentUpload = upload;
-      this.uploadService.push(upload);
-      this.request.attachmentHashes.push(upload.fileHash);
-      this.uploads.push(upload);
+      this.uploadFile(file);
     }
+  }
+
+  uploadFile(file: File): void {
+    const upload = new Upload(file);
+
+    this.currentUpload = upload;
+    this.uploadService.push(upload);
+    this.request.attachmentHashes.push(upload.fileHash);
+    this.uploads.push(upload);
   }
 
   save(): void {

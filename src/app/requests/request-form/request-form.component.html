@@ -74,14 +74,14 @@
         Progress: {{ currentUpload?.progress | number: '1.0-1' }}% Complete
       </div>
 
-      <div class="upload-form">
-        <label class="input-wrapper">
+      <label class="input-wrapper">
+        <file-drop class="upload-form" (onFileDrop)="droppedFiles($event)">
           <span class="drop-message">
-            Click to upload <span class="hide-on-small-screens">documents or </span>pictures
+            Click <span class="hide-on-small-screens">or drag </span>to upload <span class="hide-on-small-screens">files and </span>pictures
           </span>
           <input type="file" accept="{{ acceptedFileTypes.join(',') }}" class="button" (change)="processFiles($event)" multiple>
-        </label>
-      </div>
+        </file-drop>
+      </label>
 
       <div class="attachments-wrapper">
         <span *ngIf="request && uploads && uploads.length">

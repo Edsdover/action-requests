@@ -9,10 +9,7 @@
 
 .input-wrapper {
   display: block;
-  border: 2px dashed #0087F7;
-  border-radius: 5px;
   cursor: pointer;
-  height: 120px;
   margin: 20px;
 }
 

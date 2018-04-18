@@ -22,9 +22,12 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 :root {
-  --theme-color-primary: map-get($mat-teal, 500);     // #009688
-  --theme-color-secondary: map-get($mat-yellow, 500); // #ffeb3b
-  --theme-color-warn: map-get($mat-red, 900);         // #b71c1c
+  // --theme-color-primary: map-get($mat-teal, 500);     // #009688
+  // --theme-color-secondary: map-get($mat-yellow, 500); // #ffeb3b
+  // --theme-color-warn: map-get($mat-red, 900);         // #b71c1c
+  --theme-color-primary: #009688;
+  --theme-color-secondary: #ffeb3b;
+  --theme-color-warn: #b71c1c;
 }
 
 .theme-color-primary,

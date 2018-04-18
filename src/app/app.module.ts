@@ -9,6 +9,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { FileDropModule } from 'ngx-file-drop';
 import 'hammerjs';
 
 import { environment } from '../environments/environment';
@@ -46,6 +47,7 @@ import { UploadService } from './uploads';
     HttpClientModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    FileDropModule,
     AppMaterialModule
   ],
   providers: [

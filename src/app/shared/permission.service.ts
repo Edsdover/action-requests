@@ -29,8 +29,8 @@ export class PermissionService {
         .list('/admins')
         .valueChanges()
         .pipe(
-          catchError(this.handleError),
-          map((admins: any[]) => isAuthenticated && !!admins.filter(admin => admin.email === userEmail).length)
+          map((admins: any[]) => isAuthenticated && !!admins.filter(admin => admin.email === userEmail).length),
+          catchError(this.handleError)
         );
     }));
   }
