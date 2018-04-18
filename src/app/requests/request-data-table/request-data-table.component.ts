@@ -31,7 +31,7 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
     'reporter',
     'assignee',
     'category',
-    'photoHashes',
+    'attachmentHashes',
     'approvedActionPlan',
     'status'
   ];

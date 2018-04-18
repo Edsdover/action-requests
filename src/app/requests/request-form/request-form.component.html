@@ -83,9 +83,17 @@
         </label>
       </div>
 
-      <div class="photos-wrapper">
-        <span *ngFor="let upload of uploads">
-          <img class="photo" *ngIf="upload.thumbUrl || upload.url" src="{{ upload.thumbUrl || upload.url }}">
+      <div class="attachments-wrapper">
+        <span *ngIf="request && !request.key">
+          <span *ngFor="let upload of uploads">
+            <img class="attachment" *ngIf="upload.thumbUrl || upload.url" src="{{ upload.thumbUrl || upload.url }}">
+          </span>
+        </span>
+
+        <span *ngIf="request && request.key && request.attachmentUrls">
+          <span *ngFor="let attachment of request.attachmentUrls">
+            <img class="attachment" *ngIf="attachment" src="{{ attachment }}">
+          </span>
         </span>
       </div>
 

@@ -13,12 +13,12 @@ export class UploadService {
 
   constructor(private db: AngularFireDatabase) { }
 
-  getUploadByHash(photoHash: string): Observable<Upload> {
+  getUploadByHash(attachmentHash: string): Observable<Upload> {
     return this.db
-      .list(this.basePath, ref => ref.orderByChild('fileHash').equalTo(photoHash))
+      .list(this.basePath, ref => ref.orderByChild('fileHash').equalTo(attachmentHash))
       .valueChanges()
       .pipe(
-        map(photos => photos && photos.length && photos[0] as Upload)
+        map(attachments => attachments && attachments.length && attachments[0] as Upload)
       );
   }
 

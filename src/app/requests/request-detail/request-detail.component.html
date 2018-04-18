@@ -52,11 +52,11 @@
       {{ request.suggestedRemedy || 'No suggested remedy provided.' }}
     </p>
 
-    <h3 *ngIf="request.photoUrls && request.photoUrls.length">Photos</h3>
-    <div *ngIf="request.photoUrls && request.photoUrls.length" class="photos-wrapper">
-      <span *ngFor="let photoUrl of request.photoUrls">
-        <a href="{{ photoUrl }}" target="_blank">
-          <img class="photo" src="{{ photoUrl }}">
+    <h3 *ngIf="request.attachmentUrls && request.attachmentUrls.length">Attachments</h3>
+    <div *ngIf="request.attachmentUrls && request.attachmentUrls.length" class="attachments-wrapper">
+      <span *ngFor="let attachmentUrl of request.attachmentUrls">
+        <a href="{{ attachmentUrl }}" target="_blank">
+          <img class="attachment" src="{{ attachmentUrl }}">
         </a>
       </span>
     </div>

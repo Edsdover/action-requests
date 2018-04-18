@@ -207,11 +207,11 @@ function generateHtml(actionRequest) {
       ${ actionRequest.suggestedRemedy || 'No suggested remedy provided.' }
     </p>
 
-    <h3>Photos</h3>
+    <h3>Attachments</h3>
     <div>
       <span>
-        <a target="_blank" href="${ (actionRequest.photoUrls && actionRequest.photoUrls.length && actionRequest.photoUrls[0]) || requestsUrl + '/' + actionRequest.key }">
-          <img src="${ (actionRequest.photoUrls && actionRequest.photoUrls.length && actionRequest.photoUrls[0]) || fallbackImageUrl }" style="height: 120px;width: 120px;margin-left: 10px;margin-right: 10px;object-fit: cover;">
+        <a target="_blank" href="${ (actionRequest.attachmentUrls && actionRequest.attachmentUrls.length && actionRequest.attachmentUrls[0]) || requestsUrl + '/' + actionRequest.key }">
+          <img src="${ (actionRequest.attachmentUrls && actionRequest.attachmentUrls.length && actionRequest.attachmentUrls[0]) || fallbackImageUrl }" style="height: 120px;width: 120px;margin-left: 10px;margin-right: 10px;object-fit: cover;">
         </a>
       </span>
     </div>

@@ -5,8 +5,8 @@ export class ActionRequest extends FirebaseAbstract {
   category: string;
   ecn: number;
   humanReadableCode: string;
-  photoHashes: string[] = [];
-  photoUrls: string[] = [];
+  attachmentHashes: string[] = [];
+  attachmentUrls: string[] = [];
   reporter: string;
   salesOrderNumber: number;
   status = 'new'; // new, approved, resolved

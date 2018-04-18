@@ -18,7 +18,7 @@ import { ActionRequest } from '../shared';
 })
 export class RequestFormComponent implements OnInit {
   currentUpload: Upload;
-  photos: Observable<Upload>[];
+  attachments: Observable<Upload>[];
   uploads: Upload[] = [];
   isSaving = false;
 
@@ -64,12 +64,13 @@ export class RequestFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPhotos();
+    this.getAttachments();
   }
 
-  getPhotos(): void {
-    this.photos = this.request.photoHashes
-      .map((photoHash: string) => this.uploadService.getUploadByHash(photoHash));
+  getAttachments(): void {
+    // this.attachments = this.request.attachmentHashes
+    //   .map((attachmentHash: string) => this.uploadService.getUploadByHash(attachmentHash));
+    // this.attachments = this.request.attachmentUrls;
   }
 
   goBack(): void {
@@ -95,11 +96,11 @@ export class RequestFormComponent implements OnInit {
 
       this.currentUpload = upload;
       this.uploadService.push(upload);
-      this.request.photoHashes.push(upload.fileHash);
+      this.request.attachmentHashes.push(upload.fileHash);
       this.uploads.push(upload);
     }
 
-    this.getPhotos();
+    this.getAttachments();
   }
 
   save(): void {
@@ -108,15 +109,15 @@ export class RequestFormComponent implements OnInit {
     for (const upload of this.uploads) {
       // if (upload.file.type === 'application/pdf') {
       //   upload.thumbUrl = 'assets/pdf.jpg';
-      //   this.request.photoUrls.push('assets/pdf.jpg');
+      //   this.request.attachmentUrls.push('assets/pdf.jpg');
       // } else if (upload.file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
       //   upload.thumbUrl = 'assets/word.png';
-      //   this.request.photoUrls.push('assets/word.png');
+      //   this.request.attachmentUrls.push('assets/word.png');
       // } else {
       //   upload.thumbUrl = upload.url;
-      //   this.request.photoUrls.push(upload.url);
+      //   this.request.attachmentUrls.push(upload.url);
       // }
-      this.request.photoUrls.push(upload.url);
+      this.request.attachmentUrls.push(upload.url);
     }
 
     this.onSave.emit(this.request);
@@ -124,7 +125,7 @@ export class RequestFormComponent implements OnInit {
     // HACK: reset form after 1.5 seconds to allow time for the Firebase save to complete
 
     setTimeout(() => {
-      this.currentUpload = this.photos = undefined;
+      this.currentUpload = this.attachments = undefined;
       this.uploads = [];
       this.request = new ActionRequest();
       this.requestForm.resetForm();
