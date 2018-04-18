@@ -55,8 +55,9 @@
     <h3 *ngIf="request.attachments && request.attachments.length">Attachments</h3>
     <div *ngIf="request.attachments && request.attachments.length" class="attachments-wrapper">
       <span *ngFor="let attachment of request.attachments">
-        <a href="{{ attachment.attachmentUrl }}" target="_blank">
+        <a class="attachment-link" href="{{ attachment.attachmentUrl }}" target="_blank">
           <img class="attachment" src="{{ attachment.thumbUrl }}">
+          <span class="attachment-filename" *ngIf="attachment.attachmentUrl !== attachment.thumbUrl">{{ attachment.filename }}</span>
         </a>
       </span>
     </div>

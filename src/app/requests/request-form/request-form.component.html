@@ -92,7 +92,10 @@
 
         <span *ngIf="request && request.attachments && request.attachments.length">
           <span *ngFor="let attachment of request.attachments">
-            <img class="attachment" *ngIf="attachment" src="{{ attachment.thumbUrl }}">
+            <span class="attachment-link">
+              <img class="attachment" src="{{ attachment.thumbUrl }}">
+              <span class="attachment-filename" *ngIf="attachment.attachmentUrl !== attachment.thumbUrl">{{ attachment.filename }}</span>
+            </span>
           </span>
         </span>
       </div>

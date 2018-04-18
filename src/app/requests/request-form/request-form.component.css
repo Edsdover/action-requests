@@ -32,6 +32,25 @@
   object-fit: cover;
 }
 
+.attachment-filename {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  overflow: hidden;
+  margin-bottom: 8px;
+  margin-left: -116px;
+  max-height: 96px;
+  text-align: center;
+  text-overflow: ellipsis;
+  width: 90px;
+  word-wrap: break-word;
+}
+
+.attachment-link {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
 .progress-bar {
   width: 100%;
 }
