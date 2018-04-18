@@ -22,13 +22,13 @@ export class ActionRequestService {
 
   getActionRequests(): Observable<ActionRequest[]> {
     return this.afs.collection<ActionRequest>(
-      this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(200)
+      this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(10000)
     );
   }
 
   getOpenActionRequests(): Observable<ActionRequest[]> {
     return this.afs.collection<ActionRequest>(
-      this.actionRequestsPath, ref => ref.where('status', '==', 'new').orderBy('createdAt', 'desc').limit(200)
+      this.actionRequestsPath, ref => ref.where('status', '==', 'new').orderBy('createdAt', 'desc').limit(10000)
     );
   }
 
