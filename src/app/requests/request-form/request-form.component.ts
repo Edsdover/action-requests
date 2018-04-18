@@ -7,7 +7,8 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatMap';
 import { Observable } from 'rxjs/Observable';
-import { UploadEvent, UploadFile, FileSystemFileEntry } from 'ngx-file-drop';
+import { interval } from 'rxjs/observable/interval';
+import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
 
 import { Upload, UploadService } from '../../uploads';
 import { ActionRequest } from '../shared';
@@ -68,7 +69,16 @@ export class RequestFormComponent implements OnInit {
     private uploadService: UploadService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    const tick = interval(3000); // run check every 3 seconds
+    const subscription = tick.subscribe(() => {
+      if (this.currentUpload && this.currentUpload.progress === 100) {
+        setTimeout(() => {
+          this.currentUpload = undefined;
+        }, 3500);
+      }
+    });
+  }
 
   goBack(): void {
     this.location.back();

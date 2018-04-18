@@ -3,14 +3,12 @@
   color: #444;
   font-size: 1.2em;
   font-weight: 400;
-  line-height: 120px;
   text-align: center;
 }
 
 .input-wrapper {
   display: block;
   cursor: pointer;
-  margin: 20px;
 }
 
 .input-wrapper input {
@@ -48,8 +46,20 @@
   align-items: flex-end;
 }
 
+.request-form ::ng-deep .drop-zone-custom {
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  height: 120px;
+  margin: 20px;
+}
+
+.request-form ::ng-deep .drop-zone-custom .content {
+  height: 120px;
+}
+
 .progress-bar {
   width: 100%;
+  transition: opacity 800ms ease-in-out;
 }
 
 .request-form /deep/ .mat-card-actions {
