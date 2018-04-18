@@ -8,6 +8,7 @@ export class Upload {
   name: string;
   url: string;
   progress: number;
+  // thumbUrl: string;
   createdAt = new Date();
 
   constructor(file: File) {

@@ -4,14 +4,14 @@ const api_key = encodeURIComponent(functions.config().mailgun.apikey);
 const domain = encodeURIComponent(functions.config().mailgun.domain);
 const mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
-const defaultToAddress = encodeURIComponent(functions.config().notifications.defaultToAddress);
-const ccAddresses = encodeURIComponent(functions.config().notifications.ccAddresses);
-const bccAddresses = encodeURIComponent(functions.config().notifications.bccAddresses);
-const phoneNumber = encodeURIComponent(functions.config().notifications.phoneNumber);
+const defaultToAddress = encodeURIComponent(functions.config().notifications.default_to_address);
+const ccAddresses = encodeURIComponent(functions.config().notifications.cc_addresses);
+const bccAddresses = encodeURIComponent(functions.config().notifications.bcc_addresses);
+const phoneNumber = encodeURIComponent(functions.config().notifications.phone_number);
 
-const defaultFromAddress = encodeURIComponent(functions.config().notifications.defaultFromAddress);
-const EMAIL_PREFIX = encodeURIComponent(functions.config().notifications.emailPrefix);
-const requestsUrl = encodeURIComponent(functions.config().notifications.requestsUrl);
+const defaultFromAddress = encodeURIComponent(functions.config().notifications.default_from_address);
+const EMAIL_PREFIX = encodeURIComponent(functions.config().notifications.email_prefix);
+const requestsUrl = encodeURIComponent(functions.config().notifications.requests_url);
 
 const fallbackImageUrl = 'https://loremflickr.com/120/120/cat';
 
