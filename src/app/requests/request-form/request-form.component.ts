@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import * as hash from 'object-hash';
 import 'rxjs/add/observable/from';
@@ -34,7 +34,10 @@ export class RequestFormComponent implements OnInit {
     '.csv',
     '.doc',
     '.docx',
+    '.gif',
+    '.jpg',
     '.pdf',
+    '.png',
     '.txt',
     '.xls',
     '.xlsx'
@@ -59,19 +62,12 @@ export class RequestFormComponent implements OnInit {
   ];
 
   constructor(
+    private ref: ChangeDetectorRef,
     private location: Location,
     private uploadService: UploadService
   ) { }
 
-  ngOnInit() {
-    this.getAttachments();
-  }
-
-  getAttachments(): void {
-    // this.attachments = this.request.attachmentHashes
-    //   .map((attachmentHash: string) => this.uploadService.getUploadByHash(attachmentHash));
-    // this.attachments = this.request.attachmentUrls;
-  }
+  ngOnInit() { }
 
   goBack(): void {
     this.location.back();
@@ -86,38 +82,26 @@ export class RequestFormComponent implements OnInit {
 
     for (const file of selectedFiles) {
       const upload = new Upload(file);
-      // if (upload.file.type === 'application/pdf') {
-      //   upload.thumbUrl = 'assets/pdf.jpg';
-      // } else if (upload.file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      //   upload.thumbUrl = 'assets/word.png';
-      // } else {
-      //   upload.thumbUrl = upload.url;
-      // }
 
       this.currentUpload = upload;
       this.uploadService.push(upload);
       this.request.attachmentHashes.push(upload.fileHash);
       this.uploads.push(upload);
     }
-
-    this.getAttachments();
   }
 
   save(): void {
     this.isSaving = true;
+    this.requestForm.control.disable();
+    this.ref.detectChanges();
+    this.ref.detach();
 
     for (const upload of this.uploads) {
-      // if (upload.file.type === 'application/pdf') {
-      //   upload.thumbUrl = 'assets/pdf.jpg';
-      //   this.request.attachmentUrls.push('assets/pdf.jpg');
-      // } else if (upload.file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      //   upload.thumbUrl = 'assets/word.png';
-      //   this.request.attachmentUrls.push('assets/word.png');
-      // } else {
-      //   upload.thumbUrl = upload.url;
-      //   this.request.attachmentUrls.push(upload.url);
-      // }
-      this.request.attachmentUrls.push(upload.url);
+      this.request.attachments.push({
+        filename: upload.file.name,
+        attachmentUrl: upload.url,
+        thumbUrl: upload.thumbUrl || upload.url
+      });
     }
 
     this.onSave.emit(this.request);
@@ -129,12 +113,16 @@ export class RequestFormComponent implements OnInit {
       this.uploads = [];
       this.request = new ActionRequest();
       this.requestForm.resetForm();
+      this.ref.reattach();
+      this.requestForm.control.enable();
     }, 1400);
 
     setTimeout(() => {
       this.isSaving = false;
       this.request.status = null;
       this.request.status = 'new';
+      this.ref.reattach();
+      this.requestForm.control.enable();
     }, 1500);
   }
 

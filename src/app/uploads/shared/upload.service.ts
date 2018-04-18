@@ -46,7 +46,6 @@ export class UploadService {
       (): any => {
         // upload success
         upload.url = uploadTask.snapshot.downloadURL;
-        this.saveFileData(upload);
       }
     );
   }

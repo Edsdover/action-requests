@@ -5,11 +5,6 @@
     "actionRequests": {
       ".read": "true",
       ".write": "true"
-    },
-    "uploads": {
-      ".indexOn": "fileHash",
-      ".read": "true",
-      ".write": "true"
     }
   }
 }

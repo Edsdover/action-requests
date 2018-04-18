@@ -7,6 +7,7 @@ export class ActionRequest extends FirebaseAbstract {
   humanReadableCode: string;
   attachmentHashes: string[] = [];
   attachmentUrls: string[] = [];
+  attachments: Attachment[] = [];
   reporter: string;
   salesOrderNumber: number;
   status = 'new'; // new, approved, resolved
@@ -16,4 +17,10 @@ export class ActionRequest extends FirebaseAbstract {
   discrepancy: string;
   suggestedRemedy: string;
   resolution: string;
+}
+
+export class Attachment {
+  filename: string;
+  attachmentUrl: string;
+  thumbUrl: string;
 }

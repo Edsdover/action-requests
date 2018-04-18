@@ -84,15 +84,15 @@
       </div>
 
       <div class="attachments-wrapper">
-        <span *ngIf="request && !request.key">
+        <span *ngIf="request && uploads && uploads.length">
           <span *ngFor="let upload of uploads">
             <img class="attachment" *ngIf="upload.thumbUrl || upload.url" src="{{ upload.thumbUrl || upload.url }}">
           </span>
         </span>
 
-        <span *ngIf="request && request.key && request.attachmentUrls">
-          <span *ngFor="let attachment of request.attachmentUrls">
-            <img class="attachment" *ngIf="attachment" src="{{ attachment }}">
+        <span *ngIf="request && request.attachments && request.attachments.length">
+          <span *ngFor="let attachment of request.attachments">
+            <img class="attachment" *ngIf="attachment" src="{{ attachment.thumbUrl }}">
           </span>
         </span>
       </div>
@@ -132,7 +132,7 @@
 
       <button mat-raised-button
               color="accent"
-              [disabled]="isSaving || !requestForm.form.valid"
+              [disabled]="isSaving || !requestForm.form.valid || requestForm.form.disabled"
               type="submit">
         {{ showBackButton ? 'SAVE' : 'SUBMIT' }}
       </button>
