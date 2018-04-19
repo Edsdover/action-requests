@@ -3,7 +3,7 @@
     <mat-form-field>
       <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field>
-    <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Show resolved Action Requests">
+    <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Include resolved Action Requests">
       Show All
     </mat-checkbox>
   </mat-card>
