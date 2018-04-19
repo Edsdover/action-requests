@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ActionRequest, ActionRequestService } from '../shared';
 
@@ -10,6 +11,8 @@ import { ActionRequest, ActionRequestService } from '../shared';
   styleUrls: ['./request-data-table.component.css']
 })
 export class RequestDataTableComponent implements OnInit, AfterViewInit {
+  activeSubscription: Subscription;
+  checked = false;
   dataSource = new MatTableDataSource<ActionRequest>();
   displayedColumns: string[] = [];
   tinyScreenColumns = [
@@ -47,7 +50,7 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.actionRequestService.getActionRequests().subscribe(actionRequests => {
+    this.activeSubscription = this.actionRequestService.getOpenActionRequests().subscribe(actionRequests => {
       this.dataSource.data = actionRequests;
       this.loading = false;
     });
@@ -80,6 +83,23 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
 
   gotoRequest(request: ActionRequest): void {
     this.router.navigate(['requests', request.key]);
+  }
+
+  toggleOpenActionRequests(): void {
+    if (this.checked) {
+      this.loading = true;
+      this.activeSubscription.unsubscribe();
+      this.activeSubscription = this.actionRequestService.getActionRequests().subscribe(actionRequests => {
+        this.dataSource.data = actionRequests;
+        this.loading = false;
+      });
+    } else {
+      this.activeSubscription.unsubscribe();
+      this.activeSubscription = this.actionRequestService.getOpenActionRequests().subscribe(actionRequests => {
+        this.dataSource.data = actionRequests;
+        this.loading = false;
+      });
+    }
   }
 
   @HostListener('window:resize', ['$event'])

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { flow, orderBy } from 'lodash/fp';
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, map, takeUntil } from 'rxjs/operators';
 
 import { AngularFirestoreService } from '../../shared';
 import { ActionRequest } from './action-request.model';
@@ -28,7 +29,9 @@ export class ActionRequestService {
 
   getOpenActionRequests(limit = 10000): Observable<ActionRequest[]> {
     return this.afs.collection<ActionRequest>(
-      this.actionRequestsPath, ref => ref.where('status', '==', 'new').orderBy('createdAt', 'desc').limit(limit)
+      this.actionRequestsPath, ref => ref.where('status', '<=', 'new').limit(limit)
+    ).pipe(
+      map((actionRequests: ActionRequest[]) => flow([orderBy('createdAt', 'desc')])(actionRequests))
     );
   }
 

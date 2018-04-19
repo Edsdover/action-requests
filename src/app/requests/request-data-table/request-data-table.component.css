@@ -18,9 +18,16 @@
 }
 
 .data-table-header {
+  display: flex;
+  align-items: baseline;
   background-color: rgba(0, 0, 0, 0.03);
   min-height: 64px;
   padding: 8px 24px 0;
+}
+
+.hide-show-checkbox {
+  font-size: 14px;
+  margin-left: 20px;
 }
 
 .empty-search-results {

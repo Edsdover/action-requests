@@ -3,6 +3,9 @@
     <mat-form-field>
       <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field>
+    <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Show resolved Action Requests">
+      Show All
+    </mat-checkbox>
   </mat-card>
 
   <mat-card class="data-table-container">
@@ -93,12 +96,12 @@
       <mat-row *matRowDef="let actionRequest; columns: displayedColumns;" (click)="gotoRequest(actionRequest)"></mat-row>
     </mat-table>
 
-    <div class="empty-search-results" *ngIf="loading">
+    <div class="empty-search-results" *ngIf="loading && dataSource.data.length === 0">
       Loading...
     </div>
 
     <div class="empty-search-results" *ngIf="!loading && dataSource.data && dataSource.data.length === 0">
-      No action requests available.
+      No <span *ngIf="!checked">active </span>action requests found.
     </div>
 
     <div class="empty-search-results" *ngIf="dataSource.data && dataSource.data.length > 0 && dataSource.filter && dataSource.filteredData.length === 0">
