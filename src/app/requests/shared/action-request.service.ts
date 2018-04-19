@@ -44,6 +44,10 @@ export class ActionRequestService {
           ...actionRequest,
           assignee: this._formatEmailAddress(actionRequest.assignee),
           reporter: this._formatEmailAddress(actionRequest.reporter),
+          watchers: [
+            this._formatEmailAddress(actionRequest.assignee),
+            this._formatEmailAddress(actionRequest.reporter)
+          ],
           humanReadableCode: this.addPrefix(counter)
         }
       ));

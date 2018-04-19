@@ -1,5 +1,5 @@
 <mat-card class="request-form">
-  <form (ngSubmit)="save()" #requestForm="ngForm">
+  <form #requestForm="ngForm">
     <mat-card-header class="request-form-title">
       {{ title }}
     </mat-card-header>
@@ -148,8 +148,9 @@
 
       <button mat-raised-button
               color="accent"
+              (click)="save()"
               [disabled]="isSaving || !requestForm.form.valid || requestForm.form.disabled"
-              type="submit">
+              type="button">
         {{ showBackButton ? 'SAVE' : 'SUBMIT' }}
       </button>
     </mat-card-actions>

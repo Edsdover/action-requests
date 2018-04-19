@@ -2,17 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { RequestDataTableComponent, RequestDetailComponent, RequestEditComponent, RequestFormComponent,
-         RequestListComponent } from './requests';
+import { RequestDataTableComponent, RequestDetailComponent, RequestEditComponent, RequestFormComponent } from './requests';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingPageComponent
-  },
-  {
-    path: 'requests-deprecated',
-    component: RequestListComponent
   },
   {
     path: 'requests',

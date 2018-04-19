@@ -12,6 +12,7 @@ export class ActionRequest extends FirebaseAbstract {
   reporter = '';
   salesOrderNumber: number;
   status = 'new'; // new, approved, resolved
+  watchers: string[] = [];
   isUrgent: boolean;
 
   approvedActionPlan: string;

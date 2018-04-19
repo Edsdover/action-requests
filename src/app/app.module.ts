@@ -18,7 +18,7 @@ import { AppMaterialModule } from './app-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AssigneeAutocompleteComponent, ActionRequestService, CloseConfirmationComponent, RequestDataTableComponent,
-         RequestDetailComponent, RequestEditComponent, RequestFormComponent, RequestListComponent } from './requests';
+         RequestDetailComponent, RequestEditComponent, RequestFormComponent } from './requests';
 import { AngularFirestoreService, AuthService, PermissionService } from './shared';
 import { UploadService } from './uploads';
 
@@ -31,8 +31,7 @@ import { UploadService } from './uploads';
     RequestDataTableComponent,
     RequestDetailComponent,
     RequestEditComponent,
-    RequestFormComponent,
-    RequestListComponent
+    RequestFormComponent
   ],
   imports: [
     AngularFireAuthModule,
