@@ -25,6 +25,11 @@
   padding: 8px 24px 0;
 }
 
+.ellipsis {
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
 .hide-show-checkbox {
   font-size: 14px;
   margin-left: 20px;

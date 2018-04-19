@@ -55,13 +55,13 @@
       <!-- Reporter Column -->
       <ng-container matColumnDef="reporter">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Reporter </mat-header-cell>
-        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.reporter | lowercase }} </mat-cell>
+        <mat-cell class="ellipsis" *matCellDef="let actionRequest"> {{ actionRequest.reporter | lowercase }} </mat-cell>
       </ng-container>
 
       <!-- Assignee Column -->
       <ng-container matColumnDef="assignee">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Assignee </mat-header-cell>
-        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.assignee }} </mat-cell>
+        <mat-cell class="ellipsis" *matCellDef="let actionRequest"> {{ actionRequest.assignee }} </mat-cell>
       </ng-container>
 
       <!-- Category Column -->
