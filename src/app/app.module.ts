@@ -21,6 +21,7 @@ import { AssigneeAutocompleteComponent, ActionRequestService, CloseConfirmationC
          RequestDetailComponent, RequestEditComponent, RequestFormComponent } from './requests';
 import { AngularFirestoreService, AuthService, PermissionService } from './shared';
 import { UploadService } from './uploads';
+import { WatchersChipListComponent } from './requests/watchers-chip-list-input/watchers-chip-list-input.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UploadService } from './uploads';
     RequestDataTableComponent,
     RequestDetailComponent,
     RequestEditComponent,
-    RequestFormComponent
+    RequestFormComponent,
+    WatchersChipListComponent
   ],
   imports: [
     AngularFireAuthModule,

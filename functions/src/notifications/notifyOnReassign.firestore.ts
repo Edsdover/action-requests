@@ -22,9 +22,11 @@ export function handleNotifyOnReassign(change, context) {
     : `[${EMAIL_PREFIX}] (${actionRequest.humanReadableCode}) Action Request Assigned`;
   const toAddress = actionRequest.assignee;
 
+  console.info(`Debug: actionRequest:`, JSON.stringify(actionRequest, null, 2));
+
   const data = {
     to: toAddress,
-    cc: [ccAddresses, ...actionRequest.ccAddresses || []].join(','),
+    cc: [ccAddresses, ...actionRequest.watchers || []].join(','),
     subject: emailSubject,
     text: 'Action Request assigned.'
   };

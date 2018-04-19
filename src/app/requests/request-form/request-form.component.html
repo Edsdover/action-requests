@@ -60,6 +60,13 @@
         </mat-checkbox>
       </div>
 
+      <app-watchers-chip-list-input
+        class="line"
+        *ngIf="request.key"
+        [watchers]="request.watchers"
+        (watchersUpdated)="request.watchers = $event">
+      </app-watchers-chip-list-input>
+
       <mat-input-container class="line">
         <textarea matInput
                matTextareaAutosize

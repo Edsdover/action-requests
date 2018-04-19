@@ -32,6 +32,14 @@
       </app-assignee-autocomplete>
     </p>
 
+    <h3>Watchers</h3>
+    <mat-chip-list *ngIf="request.watchers && request.watchers.length">
+      <mat-chip *ngFor="let watcher of request.watchers">{{ watcher | lowercase }}</mat-chip>
+    </mat-chip-list>
+    <p class="less-visible" *ngIf="!request.watchers || !request.watchers.length">
+      No watchers.
+    </p>
+
     <h3>Sales Order</h3>
     <p [class.less-visible]="!request.salesOrderNumber">
       SO# {{ (request.salesOrderNumber | uppercase) || 'Unknown' }}

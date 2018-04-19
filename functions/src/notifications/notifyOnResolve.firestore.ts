@@ -27,7 +27,7 @@ export function handleNotifyOnResolve(change, context) {
 
   const data = {
     to: toAddress,
-    cc: [ccAddresses, ...actionRequest.ccAddresses || []].join(','),
+    cc: [ccAddresses, ...actionRequest.watchers || []].join(','),
     subject: emailSubject,
     text: 'Action Request resolved.'
   };

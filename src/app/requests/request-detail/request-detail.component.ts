@@ -80,8 +80,14 @@ export class RequestDetailComponent implements OnInit {
   }
 
   reassign(assignee: string): void {
-    if (this.request.assignee !== assignee) {
-      this.request.assignee = assignee.toLowerCase();
+    const santizedAssignee = assignee.trim().toLowerCase();
+
+    if (this.request.assignee !== santizedAssignee) {
+      if (!this.request.watchers.includes(this.request.assignee)) {
+        this.request.watchers.push(this.request.assignee);
+      }
+
+      this.request.assignee = santizedAssignee;
       this.save().then(() => this.openSnackBar('Success: Action Request reassigned!'));
     }
     this.assigneeEditable = false;
