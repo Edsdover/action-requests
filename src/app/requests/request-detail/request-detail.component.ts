@@ -83,7 +83,7 @@ export class RequestDetailComponent implements OnInit {
     const santizedAssignee = assignee.trim().toLowerCase();
 
     if (this.request.assignee !== santizedAssignee) {
-      if (!this.request.watchers.includes(this.request.assignee)) {
+      if (this.request.watchers && !this.request.watchers.includes(this.request.assignee)) {
         this.request.watchers.push(this.request.assignee);
       }
 

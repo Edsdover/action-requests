@@ -87,7 +87,7 @@
 
     <div *ngIf="request.status === 'resolved' && request.resolution">
       <h3>Resolution</h3>
-      <p [class.less-visible]="!request.resolution">
+      <p class="preserve-newlines" [class.less-visible]="!request.resolution">
         {{ request.resolution || 'No resolution provided.' }}
       </p>
     </div>

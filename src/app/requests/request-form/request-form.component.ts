@@ -48,13 +48,18 @@ export class RequestFormComponent implements OnInit {
     '.csv',
     '.doc',
     '.docx',
-    '.dwg',
-    '.dwt',
-    '.dxf',
+    '.dwg', // autocad
+    '.dwt', // autocad
+    '.dxf', // autocad
+    '.eml', // outlook
     '.gif',
     '.jpg',
+    '.msg',
     '.pdf',
     '.png',
+    '.pst', // outlook
+    '.tif',
+    '.tiff',
     '.txt',
     '.xls',
     '.xlsx'

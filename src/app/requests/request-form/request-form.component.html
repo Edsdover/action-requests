@@ -148,6 +148,17 @@
                  placeholder="ECN">
         </mat-input-container>
       </div>
+
+      <mat-input-container class="line" *ngIf="request.status === 'resolved'">
+        <textarea matInput
+                  matTextareaAutosize
+                  [matAutosizeMinRows]="5"
+                  [(ngModel)]="request.resolution"
+                  name="resolution"
+                  placeholder="Resolution"
+                  required>
+        </textarea>
+      </mat-input-container>
     </mat-card-content>
 
     <mat-card-actions align="end">
