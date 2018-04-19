@@ -5,23 +5,36 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="line">
-        <mat-input-container class="wide-input">
+      <div class="line" *ngIf="!request.key">
+        <mat-form-field class="wide-input">
           <input matInput
-          [(ngModel)]="request.reporter"
-          name="name"
-          placeholder="Reporter Name"
-          required>
-        </mat-input-container>
+            [formControl]="reporterControl" [matAutocomplete]="reporterAutocomplete" [(ngModel)]="request.reporter"
+            placeholder="Reporter Email"
+            type="text"
+            required>
+          <span matSuffix *ngIf="request.reporter === undefined || request.reporter === '' || request.reporter && !request.reporter.includes('@')">@premier-pump.net</span>
+          <mat-autocomplete #reporterAutocomplete="matAutocomplete">
+            <mat-option *ngFor="let option of filteredReporters | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
       </div>
 
-      <div class="line" *ngIf="request.key">
-        <mat-input-container class="wide-input">
+      <div class="line">
+        <mat-form-field class="wide-input">
           <input matInput
-          [(ngModel)]="request.assignee"
-          name="assignee"
-          placeholder="Assignee Email">
-        </mat-input-container>
+            [formControl]="assigneeControl" [matAutocomplete]="assigneeAutocomplete" [(ngModel)]="request.assignee"
+            placeholder="Assignee Email"
+            type="text"
+            required>
+          <span matSuffix *ngIf="request.assignee !== undefined && !request.assignee.includes('@')">@premier-pump.net</span>
+          <mat-autocomplete #assigneeAutocomplete="matAutocomplete">
+            <mat-option *ngFor="let option of filteredAssignees | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
       </div>
 
       <div class="line">

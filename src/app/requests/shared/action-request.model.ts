@@ -1,7 +1,7 @@
 import { FirebaseAbstract } from '../../shared';
 
 export class ActionRequest extends FirebaseAbstract {
-  assignee: string;
+  assignee = 'bill';
   category: string;
   ecn: number;
   humanReadableCode: string;

@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable';
+import { concatMap, map, switchMap } from 'rxjs/operators';
 
 import { ActionRequest, ActionRequestService } from '../shared';
 
@@ -27,15 +28,13 @@ export class RequestEditComponent implements OnInit {
   }
 
   getActionRequest(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.requestKey = params['key'];
+    const actionRequest$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => this.actionRequestService.getActionRequest(params.get('key')))
+    );
 
-      if (this.requestKey) {
-        this.actionRequestService
-          .getActionRequest(this.requestKey)
-          .first()
-          .subscribe((request: ActionRequest) => this.request = request);
-      }
+    actionRequest$.subscribe((actionRequest: ActionRequest) => {
+      this.request = actionRequest;
+      this.requestKey = actionRequest.key;
     });
   }
 

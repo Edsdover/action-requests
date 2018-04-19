@@ -84,6 +84,7 @@
 
 .request-form .wide-input {
   min-width: 280px;
+  max-width: 280px;
 }
 
 @media (max-width: 480px) {

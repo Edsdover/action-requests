@@ -20,15 +20,15 @@ export class ActionRequestService {
     return this.afs.doc<ActionRequest>(databasePath);
   }
 
-  getActionRequests(): Observable<ActionRequest[]> {
+  getActionRequests(limit = 10000): Observable<ActionRequest[]> {
     return this.afs.collection<ActionRequest>(
-      this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(10000)
+      this.actionRequestsPath, ref => ref.orderBy('createdAt', 'desc').limit(limit)
     );
   }
 
-  getOpenActionRequests(): Observable<ActionRequest[]> {
+  getOpenActionRequests(limit = 10000): Observable<ActionRequest[]> {
     return this.afs.collection<ActionRequest>(
-      this.actionRequestsPath, ref => ref.where('status', '==', 'new').orderBy('createdAt', 'desc').limit(10000)
+      this.actionRequestsPath, ref => ref.where('status', '==', 'new').orderBy('createdAt', 'desc').limit(limit)
     );
   }
 

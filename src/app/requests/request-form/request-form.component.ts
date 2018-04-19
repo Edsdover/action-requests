@@ -8,10 +8,11 @@ import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatMap';
 import { Observable } from 'rxjs/Observable';
 import { interval } from 'rxjs/observable/interval';
+import { map, startWith } from 'rxjs/operators';
 import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
 
 import { Upload, UploadService } from '../../uploads';
-import { ActionRequest } from '../shared';
+import { ActionRequest, ActionRequestService } from '../shared';
 
 @Component({
   selector: 'app-request-form',
@@ -23,6 +24,14 @@ export class RequestFormComponent implements OnInit {
   attachments: Observable<Upload>[];
   uploads: Upload[] = [];
   isSaving = false;
+
+  assigneeControl: FormControl = new FormControl();
+  assigneeOptions: string[] = [];
+  filteredAssignees: Observable<string[]>;
+
+  reporterControl: FormControl = new FormControl();
+  reporterOptions: string[] = [];
+  filteredReporters: Observable<string[]>;
 
   acceptedFileTypes = [
     'application/msword',
@@ -64,6 +73,7 @@ export class RequestFormComponent implements OnInit {
   ];
 
   constructor(
+    private actionRequestService: ActionRequestService,
     private ref: ChangeDetectorRef,
     private location: Location,
     private uploadService: UploadService
@@ -78,6 +88,42 @@ export class RequestFormComponent implements OnInit {
         }, 3500);
       }
     });
+
+    this.actionRequestService.getActionRequests(250).subscribe(actionRequests => {
+      this.assigneeOptions = Array.from(new Set(actionRequests
+        .map(actionRequest => actionRequest.assignee ? actionRequest.assignee.toLowerCase() : null)
+        .filter(assignee => assignee)
+        .sort()
+      ));
+
+      this.reporterOptions = Array.from(new Set(actionRequests
+        .map(actionRequest => actionRequest.reporter ? actionRequest.reporter.toLowerCase() : null)
+        .filter(assignee => assignee)
+        .sort()
+      ));
+    });
+
+    this.filteredAssignees = this.assigneeControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filterAssignees(val))
+      );
+
+    this.filteredReporters = this.reporterControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filterReporters(val))
+      );
+  }
+
+  filterAssignees(val: string): string[] {
+    return this.assigneeOptions.filter(option =>
+      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+  }
+
+  filterReporters(val: string): string[] {
+    return this.reporterOptions.filter(option =>
+      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
   }
 
   goBack(): void {
