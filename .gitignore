@@ -1,8 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 *_bak
-yarn-error.log
+.firebaserc
+firebase-debug.log
 src/environments/firebase.ts
+yarn-error.log
 
 # compiled output
 /dist

@@ -155,3 +155,7 @@
     </mat-card-actions>
   </form>
 </mat-card>
+
+<div *ngIf="!env.production">
+  <button mat-raised-button color="primary" (click)="resetForm()">RESET FORM</button>
+</div>

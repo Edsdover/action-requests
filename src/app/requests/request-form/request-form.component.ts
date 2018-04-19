@@ -11,6 +11,7 @@ import { interval } from 'rxjs/observable/interval';
 import { map, startWith } from 'rxjs/operators';
 import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
 
+import { environment } from '../../../environments/environment';
 import { Upload, UploadService } from '../../uploads';
 import { ActionRequest, ActionRequestService } from '../shared';
 
@@ -20,6 +21,8 @@ import { ActionRequest, ActionRequestService } from '../shared';
   styleUrls: ['./request-form.component.css']
 })
 export class RequestFormComponent implements OnInit {
+  env = environment;
+
   currentUpload: Upload;
   attachments: Observable<Upload>[];
   uploads: Upload[] = [];
@@ -45,6 +48,9 @@ export class RequestFormComponent implements OnInit {
     '.csv',
     '.doc',
     '.docx',
+    '.dwg',
+    '.dwt',
+    '.dxf',
     '.gif',
     '.jpg',
     '.pdf',
@@ -98,7 +104,7 @@ export class RequestFormComponent implements OnInit {
 
       this.reporterOptions = Array.from(new Set(actionRequests
         .map(actionRequest => actionRequest.reporter ? actionRequest.reporter.toLowerCase() : null)
-        .filter(assignee => assignee)
+        .filter(reporter => reporter)
         .sort()
       ));
     });
@@ -160,6 +166,33 @@ export class RequestFormComponent implements OnInit {
     this.uploads.push(upload);
   }
 
+  resetForm(): void {
+    // HACK: reset form after 1.5 seconds to allow time for the Firebase save to complete
+
+    setTimeout(() => {
+      this.currentUpload = this.attachments = undefined;
+      this.uploads = [];
+      this.request = new ActionRequest();
+      this.requestForm.resetForm();
+      this.assigneeControl.setValue('');
+      this.assigneeControl.markAsPristine();
+      this.assigneeControl.markAsUntouched();
+      this.reporterControl.setValue('');
+      this.reporterControl.markAsPristine();
+      this.reporterControl.markAsUntouched();
+      this.ref.reattach();
+      this.requestForm.control.enable();
+    }, 1400);
+
+    setTimeout(() => {
+      this.isSaving = false;
+      this.request.status = null;
+      this.request.status = 'new';
+      this.ref.reattach();
+      this.requestForm.control.enable();
+    }, 1500);
+  }
+
   save(): void {
     this.isSaving = true;
     this.requestForm.control.disable();
@@ -176,24 +209,7 @@ export class RequestFormComponent implements OnInit {
 
     this.onSave.emit(this.request);
 
-    // HACK: reset form after 1.5 seconds to allow time for the Firebase save to complete
-
-    setTimeout(() => {
-      this.currentUpload = this.attachments = undefined;
-      this.uploads = [];
-      this.request = new ActionRequest();
-      this.requestForm.resetForm();
-      this.ref.reattach();
-      this.requestForm.control.enable();
-    }, 1400);
-
-    setTimeout(() => {
-      this.isSaving = false;
-      this.request.status = null;
-      this.request.status = 'new';
-      this.ref.reattach();
-      this.requestForm.control.enable();
-    }, 1500);
+    this.resetForm();
   }
 
 }

@@ -10,7 +10,7 @@ import { ActionRequest } from './action-request.model';
 @Injectable()
 export class ActionRequestService {
   private actionRequestsPath = '/actionRequests';
-  private defaultAssignee = 'bill@premier-pump.net';
+  private defaultEmailDomain = 'premier-pump.net';
   private initialCounter = 1000;
   private prefix = 'AR';
 
@@ -42,7 +42,8 @@ export class ActionRequestService {
       .then(counter => this.afs.add<ActionRequest>(
         this.actionRequestsPath, {
           ...actionRequest,
-          assignee: this.defaultAssignee,
+          assignee: this._formatEmailAddress(actionRequest.assignee),
+          reporter: this._formatEmailAddress(actionRequest.reporter),
           humanReadableCode: this.addPrefix(counter)
         }
       ));
@@ -66,6 +67,13 @@ export class ActionRequestService {
 
   removePrefix(code: string): number {
     return +code.split(this.prefix)[1];
+  }
+
+  _formatEmailAddress(addressee: string): string {
+    if (addressee.includes('@')) {
+      return addressee;
+    }
+    return `${addressee}@${this.defaultEmailDomain}`;
   }
 
   _incrementCounter(delay = 1000): Promise<number> {

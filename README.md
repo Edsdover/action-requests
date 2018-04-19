@@ -60,7 +60,7 @@ firebase functions:config:set notifications.cc_addresses="employee@example.com,m
 firebase functions:config:set notifications.bcc_addresses="programmer@example.com"
 firebase functions:config:set notifications.phone_number="4008675309@vtext.com"
 firebase functions:config:set notifications.default_from_address="AR Bot <noreply@example.com>"
-firebase functions:config:set notifications.requests_url="https://action.example.com/requests"
+firebase functions:config:set notifications.hosted_url="https://action.example.com"
 firebase functions:config:set notifications.email_prefix="AR"
 ```
 

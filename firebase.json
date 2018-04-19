@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "functions": {
-    "predeploy": "cd functions || true && yarn && yarn build"
+    "predeploy": "yarn --cwd functions firebase:build || true"
   },
   "hosting": {
     "public": "dist",

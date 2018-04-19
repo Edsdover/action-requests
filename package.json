@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "firebase:build": "yarn && ng build --aot--build-optimizer && yarn functions:build",
+    "firebase:build": "yarn && ng build --aot --build-optimizer && yarn functions:build",
     "firebase:build-production": "yarn && ng build --aot --build-optimizer --prod && yarn functions:build",
     "firebase:deploy": "yarn firebase:build && firebase deploy --project staging",
     "firebase:deploy-production": "yarn firebase:build-production && firebase deploy --project production",

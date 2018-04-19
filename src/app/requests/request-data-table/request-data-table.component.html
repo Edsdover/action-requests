@@ -55,7 +55,7 @@
       <!-- Reporter Column -->
       <ng-container matColumnDef="reporter">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Reporter </mat-header-cell>
-        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.reporter | titlecase }} </mat-cell>
+        <mat-cell *matCellDef="let actionRequest"> {{ actionRequest.reporter | lowercase }} </mat-cell>
       </ng-container>
 
       <!-- Assignee Column -->
