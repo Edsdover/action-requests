@@ -175,6 +175,14 @@
   </form>
 </mat-card>
 
-<div *ngIf="!env.production">
+<div *ngIf="(debug | async) || !env.production" style="margin-top: 20px">
   <button mat-raised-button color="primary" (click)="resetForm()">RESET FORM</button>
 </div>
+
+<div *ngIf="(debug | async) || !env.production" style="margin-top: 20px">
+  <button mat-raised-button color="primary" (click)="checkIncrement()">CHECK</button>
+  <p>
+    {{ increment }}
+  </p>
+</div>
+

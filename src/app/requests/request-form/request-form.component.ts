@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import * as hash from 'object-hash';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/combineLatest';
@@ -21,7 +22,9 @@ import { ActionRequest, ActionRequestService } from '../shared';
   styleUrls: ['./request-form.component.css']
 })
 export class RequestFormComponent implements OnInit {
+  debug: Observable<string>;
   env = environment;
+  increment: any = '...';
 
   currentUpload: Upload;
   attachments: Observable<Upload>[];
@@ -86,6 +89,7 @@ export class RequestFormComponent implements OnInit {
   constructor(
     private actionRequestService: ActionRequestService,
     private ref: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private location: Location,
     private uploadService: UploadService
   ) { }
@@ -124,6 +128,12 @@ export class RequestFormComponent implements OnInit {
       .pipe(
         startWith(''),
         map(val => this.filterReporters(val))
+      );
+
+    this.debug = this.route
+      .queryParamMap
+      .pipe(
+        map(params => params.get('debug'))
       );
   }
 
@@ -217,4 +227,11 @@ export class RequestFormComponent implements OnInit {
     this.resetForm();
   }
 
+  checkIncrement() {
+    this.increment = '...';
+    this.actionRequestService
+      ._incrementCounter(300)
+      .then(() => this.actionRequestService._incrementCounter())
+      .then(value => this.increment = value);
+  }
 }

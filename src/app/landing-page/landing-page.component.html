@@ -2,10 +2,3 @@
   <app-request-form [request]="request" [title]="'Action Request Form'" (onSave)="save($event)">
   </app-request-form>
 </div>
-
-<div *ngIf="!env.production">
-  <button mat-raised-button color="primary" (click)="checkIncrement()">CHECK</button>
-  <p>
-    {{ increment }}
-  </p>
-</div>

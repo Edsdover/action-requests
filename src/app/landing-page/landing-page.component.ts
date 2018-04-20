@@ -13,7 +13,6 @@ import { ActionRequest, ActionRequestService } from '../requests';
 export class LandingPageComponent implements OnInit {
   env = environment;
   request: ActionRequest;
-  increment: any = 'thinking';
 
   constructor(
     private snackBar: MatSnackBar,
@@ -37,13 +36,4 @@ export class LandingPageComponent implements OnInit {
       .then(() => this.openSnackBar('Success: Action Request submitted!'))
       .catch(error => this.openSnackBar(error));
   }
-
-  checkIncrement() {
-    this.increment = 'thinking';
-    this.actionRequestService
-      ._incrementCounter(300)
-      .then(() => this.actionRequestService._incrementCounter())
-      .then(value => this.increment = value);
-  }
-
 }
