@@ -93,3 +93,14 @@
     display: none;
   }
 }
+
+@media (max-width: 350px) {
+  .request-form .wide-input ::ng-deep .mat-form-field-infix {
+    width: unset;
+  }
+
+  .request-form .wide-input {
+    min-width: 0px;
+    max-width: none;
+  }
+}
