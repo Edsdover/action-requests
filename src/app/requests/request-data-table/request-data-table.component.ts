@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { flow, sortBy } from 'lodash/fp';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ActionRequest, ActionRequestService } from '../shared';
+import { XlsxService } from '../../shared/xlsx.service';
 
 @Component({
   selector: 'app-request-data-table',
@@ -46,7 +48,8 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private actionRequestService: ActionRequestService,
-    private router: Router
+    private router: Router,
+    private xlsxService: XlsxService
   ) { }
 
   ngOnInit() {
@@ -81,6 +84,29 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
     return this.tinyScreenColumns;
   }
 
+  export(): void {
+    const spreadsheet = flow([sortBy('No.')])(this.dataSource.data.map((actionRequest: ActionRequest) => {
+      return {
+        'No.': actionRequest.humanReadableCode,
+        'Sales Order': actionRequest.salesOrderNumber,
+        'Created': actionRequest.createdAt,
+        'Updated': actionRequest.updatedAt,
+        'Reporter': actionRequest.reporter,
+        'Assignee': actionRequest.assignee,
+        'Category': this._titlecase(actionRequest.category),
+        'ECN': actionRequest.ecn,
+        'Attachments': !!(actionRequest.attachments && actionRequest.attachments.length),
+        'Urgent': !!actionRequest.isUrgent,
+        'Status': this._titlecase(actionRequest.status),
+        'Discrepancy': actionRequest.discrepancy,
+        'Action Plan': actionRequest.approvedActionPlan,
+        'Resolution': actionRequest.resolution
+      };
+    }));
+
+    this.xlsxService.export(spreadsheet);
+  }
+
   gotoRequest(request: ActionRequest): void {
     this.router.navigate(['requests', request.key]);
   }
@@ -105,5 +131,10 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.displayedColumns = this.calculateColumns(event.target.innerWidth);
+  }
+
+  _titlecase(str) {
+    if (!str) { return ''; }
+    return str.replace(/\b\S/g, function(t) { return t.toUpperCase(); });
   }
 }

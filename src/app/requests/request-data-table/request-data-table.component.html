@@ -1,11 +1,16 @@
 <div class="request-data-table">
   <mat-card class="data-table-header">
-    <mat-form-field>
+    <mat-form-field class="search-field">
       <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field>
-    <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Include resolved Action Requests">
-      Show All
-    </mat-checkbox>
+    <div class="header-buttons">
+      <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Include Resolved">
+        Show All
+      </mat-checkbox>
+      <button mat-raised-button class="export-button" color="primary" (click)="export()" matTooltip="Export to Excel">
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </div>
   </mat-card>
 
   <mat-card class="data-table-container">
@@ -54,13 +59,13 @@
 
       <!-- Reporter Column -->
       <ng-container matColumnDef="reporter">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Reporter </mat-header-cell>
+        <mat-header-cell class="ellipsis" *matHeaderCellDef mat-sort-header> Reporter </mat-header-cell>
         <mat-cell class="ellipsis" *matCellDef="let actionRequest"> {{ actionRequest.reporter | lowercase }} </mat-cell>
       </ng-container>
 
       <!-- Assignee Column -->
       <ng-container matColumnDef="assignee">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Assignee </mat-header-cell>
+        <mat-header-cell class="ellipsis" *matHeaderCellDef mat-sort-header> Assignee </mat-header-cell>
         <mat-cell class="ellipsis" *matCellDef="let actionRequest"> {{ actionRequest.assignee }} </mat-cell>
       </ng-container>
 

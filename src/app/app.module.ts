@@ -21,6 +21,7 @@ import { AssigneeAutocompleteComponent, ActionRequestService, CloseConfirmationC
 import { AngularFirestoreService, AuthService, PermissionService } from './shared';
 import { UploadService } from './uploads';
 import { WatchersChipListComponent } from './requests/watchers-chip-list-input/watchers-chip-list-input.component';
+import { XlsxService } from './shared/xlsx.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { WatchersChipListComponent } from './requests/watchers-chip-list-input/w
     AngularFirestoreService,
     AuthService,
     PermissionService,
-    UploadService
+    UploadService,
+    XlsxService
   ],
   entryComponents: [ CloseConfirmationComponent ],
   bootstrap: [ AppComponent ]

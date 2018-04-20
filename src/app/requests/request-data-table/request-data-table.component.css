@@ -19,20 +19,50 @@
 
 .data-table-header {
   display: flex;
-  align-items: baseline;
+  flex-direction: row;
   background-color: rgba(0, 0, 0, 0.03);
   min-height: 64px;
   padding: 8px 24px 0;
 }
 
+.data-table-header .header-buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.data-table-header .search-field {
+  flex: 1 1 auto;
+  min-width: 240px;
+  width: unset;
+}
+
+.data-table-header .export-button {
+  min-width: 68px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.data-table-header .hide-show-checkbox {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 520px) {
+  .data-table-header {
+    flex-direction: column;
+  }
+
+  .data-table-header .header-buttons {
+    align-items: flex-start;
+    margin-left: 0;
+  }
+}
+
 .ellipsis {
   margin-right: 10px;
   white-space: nowrap;
-}
-
-.hide-show-checkbox {
-  font-size: 14px;
-  margin-left: 20px;
 }
 
 .empty-search-results {
