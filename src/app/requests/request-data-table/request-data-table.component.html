@@ -75,11 +75,11 @@
         <mat-cell *matCellDef="let actionRequest" class="cell-category"> {{ actionRequest.category | titlecase }} </mat-cell>
       </ng-container>
 
-      <!-- Attachment Hashes Column -->
-      <ng-container matColumnDef="attachmentHashes">
+      <!-- Attachments Column -->
+      <ng-container matColumnDef="attachments">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="cell-attachments"> Attachments </mat-header-cell>
         <mat-cell *matCellDef="let actionRequest" class="cell-attachments">
-          <mat-icon *ngIf="actionRequest.attachmentHashes && actionRequest.attachmentHashes.length">done</mat-icon>
+          <mat-icon *ngIf="actionRequest.attachments && actionRequest.attachments.length">done</mat-icon>
         </mat-cell>
       </ng-container>
 

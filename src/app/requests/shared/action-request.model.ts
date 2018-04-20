@@ -3,11 +3,8 @@ import { FirebaseAbstract } from '../../shared';
 export class ActionRequest extends FirebaseAbstract {
   assignee = 'bill';
   category: string;
-  ccAddresses: string[] = [];
   ecn: number;
   humanReadableCode: string;
-  attachmentHashes: string[] = [];
-  attachmentUrls: string[] = [];
   attachments: Attachment[] = [];
   reporter = '';
   salesOrderNumber: number;

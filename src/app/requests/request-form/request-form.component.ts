@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import * as hash from 'object-hash';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/concat';
@@ -177,7 +176,6 @@ export class RequestFormComponent implements OnInit {
 
     this.currentUpload = upload;
     this.uploadService.push(upload);
-    this.request.attachmentHashes.push(upload.fileHash);
     this.uploads.push(upload);
   }
 

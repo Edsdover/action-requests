@@ -15,7 +15,6 @@ import { CloseConfirmationComponent } from '../close-confirmation/close-confirma
 })
 export class RequestDetailComponent implements OnInit {
   loading = true;
-  attachments: Observable<Upload>[];
   request: ActionRequest;
   request$: Observable<ActionRequest>;
   requestKey: string;
@@ -60,9 +59,6 @@ export class RequestDetailComponent implements OnInit {
         this.request$.subscribe((request: ActionRequest) => {
           this.loading = false;
           this.request = request;
-          this.attachments = (request && request.attachmentHashes && request.attachmentHashes.length)
-            ? request.attachmentHashes.map((attachmentHash: string) => this.uploadService.getUploadByHash(attachmentHash))
-            : null;
         });
       }
     });
