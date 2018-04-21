@@ -65,8 +65,11 @@ export class RequestDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    // this.location.back();
-    this.router.navigate(['requests']);
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['requests']);
+    }
   }
 
   openSnackBar(message: string) {

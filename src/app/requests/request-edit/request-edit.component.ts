@@ -39,7 +39,8 @@ export class RequestEditComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(['requests', this.requestKey]);
   }
 
   save(request: ActionRequest): void {

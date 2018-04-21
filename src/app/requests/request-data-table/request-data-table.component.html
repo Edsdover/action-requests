@@ -1,10 +1,10 @@
 <div class="request-data-table">
   <mat-card class="data-table-header">
     <mat-form-field class="search-field">
-      <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      <input matInput #filter [ngModel]="search" (keyup)="persistSearch($event.target.value)" placeholder="Search">
     </mat-form-field>
     <div class="header-buttons">
-      <mat-checkbox class="hide-show-checkbox" [(ngModel)]="checked" (change)="toggleOpenActionRequests()" matTooltip="Include Resolved">
+      <mat-checkbox class="hide-show-checkbox" [ngModel]="checked" (change)="persistShowAll($event)" matTooltip="Include Resolved">
         Show All
       </mat-checkbox>
       <button mat-raised-button class="export-button" color="primary" (click)="export()" matTooltip="Export to Excel">
@@ -114,7 +114,8 @@
     </div>
 
     <mat-paginator #paginator
-                   [length]="dataSource.data && dataSource.data.length || 0"
+                   (page)="persistPage($event)"
+                   [length]="dataSource.filteredData && dataSource.filteredData.length || 0"
                    [pageSize]="10"
                    [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
