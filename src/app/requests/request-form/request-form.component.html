@@ -11,6 +11,8 @@
             [formControl]="reporterControl" [matAutocomplete]="reporterAutocomplete" [(ngModel)]="request.reporter"
             placeholder="Reporter Email"
             type="text"
+            minlength="2"
+            pattern="[a-zA-Z ]*\S+[a-zA-Z ]*"
             required>
           <span matSuffix *ngIf="request.reporter === undefined || request.reporter === '' || request.reporter && !request.reporter.includes('@')">@premier-pump.net</span>
           <mat-autocomplete #reporterAutocomplete="matAutocomplete">
@@ -27,6 +29,8 @@
             [formControl]="assigneeControl" [matAutocomplete]="assigneeAutocomplete" [(ngModel)]="request.assignee"
             placeholder="Assignee Email"
             type="text"
+            minlength="2"
+            pattern="[a-zA-Z]*"
             required>
           <span matSuffix *ngIf="request.assignee !== undefined && !request.assignee.includes('@')">@premier-pump.net</span>
           <mat-autocomplete #assigneeAutocomplete="matAutocomplete">
