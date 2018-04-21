@@ -43,11 +43,8 @@ export class ActionRequestService {
         this.actionRequestsPath, {
           ...actionRequest,
           assignee: this._formatEmailAddress(actionRequest.assignee),
-          reporter: this._formatEmailAddress(actionRequest.reporter),
-          watchers: [
-            this._formatEmailAddress(actionRequest.assignee),
-            this._formatEmailAddress(actionRequest.reporter)
-          ],
+          reporter: this._formatReporter(actionRequest.reporter),
+          watchers: this._populateWatchers(actionRequest),
           humanReadableCode: this.addPrefix(counter)
         }
       ));
@@ -58,7 +55,11 @@ export class ActionRequestService {
   }
 
   update(actionRequest: ActionRequest): Promise<void> {
-    return this.afs.update(`${this.actionRequestsPath}/${actionRequest.key}`, actionRequest);
+    return this.afs.update(`${this.actionRequestsPath}/${actionRequest.key}`, {
+      ...actionRequest,
+      assignee: this._formatEmailAddress(actionRequest.assignee),
+      reporter: this._formatReporter(actionRequest.reporter)
+    });
   }
 
   delete(actionRequestKey: string): Promise<void> {
@@ -73,11 +74,29 @@ export class ActionRequestService {
     return +code.split(this.prefix)[1];
   }
 
+  _formatReporter(reporter: string): string {
+    if (reporter.trim().includes(' ')) {
+      return reporter.trim();
+    }
+
+    return this._formatEmailAddress(reporter);
+  }
+
   _formatEmailAddress(addressee: string): string {
     if (addressee.includes('@')) {
-      return addressee;
+      return addressee.trim().toLowerCase();
     }
-    return `${addressee}@${this.defaultEmailDomain}`;
+    return `${addressee}@${this.defaultEmailDomain}`.trim().toLowerCase();
+  }
+
+  _populateWatchers(actionRequest: ActionRequest): string[] {
+    const watchers = [ this._formatEmailAddress(actionRequest.assignee) ];
+
+    if (!actionRequest.reporter.trim().includes(' ')) {
+      watchers.push(this._formatEmailAddress(actionRequest.reporter));
+    }
+
+    return watchers;
   }
 
   _incrementCounter(delay = 1000): Promise<number> {

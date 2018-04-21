@@ -1,5 +1,5 @@
 import { sendEmail, sendTextMessage } from './mailgun.service';
-import { EMAIL_PREFIX } from './shared';
+import { defaultToAddress, EMAIL_PREFIX } from './shared';
 
 // Sends an email when Action Request is created
 export function handleNotifyOnCreate(snap, context) {
@@ -24,10 +24,14 @@ export function handleNotifyOnCreate(snap, context) {
 
   const data = {
     to: actionRequest.assignee,
-    cc: actionRequest.reporter,
+    cc: defaultToAddress,
     subject: emailSubject,
     text: messageText
   };
+
+  if (actionRequest.reporter.includes('@') && !actionRequest.reporter.includes(' ')) {
+    data.cc = actionRequest.reporter;
+  }
 
   sendEmail(actionRequest, data);
 

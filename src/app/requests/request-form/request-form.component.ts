@@ -111,7 +111,7 @@ export class RequestFormComponent implements OnInit {
       ));
 
       this.reporterOptions = Array.from(new Set(actionRequests
-        .map(actionRequest => actionRequest.reporter ? actionRequest.reporter.toLowerCase() : null)
+        .map(actionRequest => actionRequest.reporter || null)
         .filter(reporter => reporter)
         .sort()
       ));
