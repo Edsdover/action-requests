@@ -82,6 +82,13 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'createdAt': return new Date(item.createdAt);
+        case 'createdAtVerbose': return new Date(item.createdAt);
+        default: return item[property];
+      }
+    };
 
     this.sort.sortChange.subscribe(sort => this.persistSort(sort));
   }
