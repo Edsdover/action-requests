@@ -75,7 +75,7 @@ export class ActionRequestService {
   }
 
   _formatReporter(reporter: string): string {
-    if (reporter.trim().includes(' ')) {
+    if (!reporter.includes('@') && reporter.trim().includes(' ')) {
       return reporter.trim();
     }
 

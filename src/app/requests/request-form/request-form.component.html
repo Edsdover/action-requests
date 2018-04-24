@@ -12,7 +12,8 @@
             placeholder="Reporter Email"
             type="text"
             minlength="2"
-            pattern="[a-zA-Z ]*\S+[a-zA-Z ]*"
+            [pattern]="(request.reporter !== undefined && !request.reporter.includes('@')) && '[a-zA-Z ]+[a-zA-Z.]+[a-zA-Z ]*' || '.*'"
+            [email]="request.reporter !== undefined && request.reporter.includes('@')"
             required>
           <span matSuffix *ngIf="request.reporter === undefined || request.reporter === '' || request.reporter && !request.reporter.includes('@')">@premier-pump.net</span>
           <mat-autocomplete #reporterAutocomplete="matAutocomplete">
@@ -30,7 +31,8 @@
             placeholder="Assignee Email"
             type="text"
             minlength="2"
-            pattern="[a-zA-Z]*"
+            [pattern]="(request.assignee !== undefined && !request.assignee.includes('@')) && '[ ]*[a-zA-Z.]+[ ]*' || '.*'"
+            [email]="request.assignee !== undefined && request.assignee.includes('@')"
             required>
           <span matSuffix *ngIf="request.assignee !== undefined && !request.assignee.includes('@')">@premier-pump.net</span>
           <mat-autocomplete #assigneeAutocomplete="matAutocomplete">
