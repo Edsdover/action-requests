@@ -83,10 +83,11 @@ export class ActionRequestService {
   }
 
   _formatEmailAddress(addressee: string): string {
-    if (addressee.includes('@')) {
-      return addressee.trim().toLowerCase();
+    const safeAddressee = addressee.replace(/ /g, '');
+    if (safeAddressee.includes('@')) {
+      return safeAddressee.trim().toLowerCase();
     }
-    return `${addressee}@${this.defaultEmailDomain}`.trim().toLowerCase();
+    return `${safeAddressee}@${this.defaultEmailDomain}`.trim().toLowerCase();
   }
 
   _populateWatchers(actionRequest: ActionRequest): string[] {

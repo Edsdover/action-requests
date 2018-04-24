@@ -40,6 +40,7 @@ export class Upload {
     ];
     const imageTypes = [
       'gif',
+      'jpeg',
       'jpg',
       'png'
     ];
@@ -57,7 +58,7 @@ export class Upload {
     if (documentTypes.includes(extension)) {
       return 'assets/document.png';
     }
-    if (imageTypes.includes(extension)) {
+    if (imageTypes.includes(extension.toLowerCase())) {
       return null;
     }
     if (pdfTypes.includes(extension)) {

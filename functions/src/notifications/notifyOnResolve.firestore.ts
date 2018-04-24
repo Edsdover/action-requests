@@ -1,11 +1,12 @@
 import { sendEmail } from './mailgun.service';
 import { ccAddresses, EMAIL_PREFIX } from './shared';
+import { validateEmail } from './util';
 
 // Sends an email when Action Request is resolved
 export function handleNotifyOnResolve(change, context) {
   const actionRequest = change.after.data();
   const previousValue = change.before.data();
-  const timestamp = new Date().toUTCString().slice(0, -4);
+  const timestamp = new Date().toUTCString().slice(0, -7);
 
   if (actionRequest.notifyOnResolve === timestamp) {
     console.info(`onResolve notification has already triggered. Goodbye!`);
@@ -22,12 +23,18 @@ export function handleNotifyOnResolve(change, context) {
     return 0;
   }
 
+  console.info(`Debug: actionRequest:`, JSON.stringify(actionRequest, null, 2));
+
   const emailSubject = `[${EMAIL_PREFIX}] (${actionRequest.humanReadableCode}) Action Request Resolved`;
   const toAddress = actionRequest.assignee;
 
+  const sanitizedWatchers = (actionRequest.watchers && actionRequest.watchers.length)
+    ? actionRequest.watchers.map(watcher => validateEmail(watcher))
+    : [];
+
   const data = {
-    to: toAddress,
-    cc: [ccAddresses, ...actionRequest.watchers || []].join(','),
+    to: validateEmail(toAddress),
+    cc: [ validateEmail(ccAddresses), sanitizedWatchers ].join(','),
     subject: emailSubject,
     text: 'Action Request resolved.'
   };
