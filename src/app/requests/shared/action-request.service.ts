@@ -37,7 +37,7 @@ export class ActionRequestService {
 
   create(actionRequest: ActionRequest): Promise<ActionRequest> {
     return this
-      ._incrementCounter(300)
+      ._incrementCounter(400)
       .then(() => this._incrementCounter())
       .then(counter => this.afs.add<ActionRequest>(
         this.actionRequestsPath, {
@@ -45,7 +45,11 @@ export class ActionRequestService {
           assignee: this._formatEmailAddress(actionRequest.assignee),
           reporter: this._formatReporter(actionRequest.reporter),
           watchers: this._populateWatchers(actionRequest),
-          humanReadableCode: this.addPrefix(counter)
+          humanReadableCode: counter
+            ? this.addPrefix(counter)
+            : actionRequest.humanReadableCode
+              && this.addPrefix(this.removePrefix(actionRequest.humanReadableCode) + 1)
+              || this.addPrefix(this.initialCounter)
         }
       ));
   }
@@ -100,7 +104,7 @@ export class ActionRequestService {
     return watchers;
   }
 
-  _incrementCounter(delay = 1000): Promise<number> {
+  _incrementCounter(delay = 1500): Promise<number> {
     return this.afs
       .collection<ActionRequest>(this.actionRequestsPath, ref => ref.orderBy('humanReadableCode', 'desc').limit(1))
       .pipe(
@@ -109,7 +113,7 @@ export class ActionRequestService {
       .toPromise()
       .then(actionRequests => (actionRequests && actionRequests.length)
         ? this.removePrefix(actionRequests[0].humanReadableCode) + 1
-        : this.initialCounter
+        : null
       );
   }
 }

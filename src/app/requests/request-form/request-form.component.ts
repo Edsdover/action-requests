@@ -30,6 +30,8 @@ export class RequestFormComponent implements OnInit {
   uploads: Upload[] = [];
   isSaving = false;
 
+  actionRequestNumbers: string[];
+
   assigneeControl: FormControl = new FormControl();
   assigneeOptions: string[] = [];
   filteredAssignees: Observable<string[]>;
@@ -104,6 +106,13 @@ export class RequestFormComponent implements OnInit {
     });
 
     this.actionRequestService.getActionRequests(250).subscribe(actionRequests => {
+      this.actionRequestNumbers = Array.from(new Set(actionRequests
+        .map(actionRequest => actionRequest.humanReadableCode || null)
+        .filter(humanReadableCode => humanReadableCode)
+        .sort()
+        .reverse()
+      ));
+
       this.assigneeOptions = Array.from(new Set(actionRequests
         .map(actionRequest => actionRequest.assignee ? actionRequest.assignee.toLowerCase() : null)
         .filter(assignee => assignee)
@@ -195,7 +204,7 @@ export class RequestFormComponent implements OnInit {
       this.reporterControl.markAsUntouched();
       this.ref.reattach();
       this.requestForm.control.enable();
-    }, 1400);
+    }, 1900);
 
     setTimeout(() => {
       this.isSaving = false;
@@ -203,7 +212,7 @@ export class RequestFormComponent implements OnInit {
       this.request.status = 'new';
       this.ref.reattach();
       this.requestForm.control.enable();
-    }, 1500);
+    }, 2000);
   }
 
   save(): void {
@@ -218,6 +227,10 @@ export class RequestFormComponent implements OnInit {
         attachmentUrl: upload.url,
         thumbUrl: upload.thumbUrl || upload.url
       });
+    }
+
+    if (!this.request.humanReadableCode && this.actionRequestNumbers && this.actionRequestNumbers.length) {
+      this.request.humanReadableCode = this.actionRequestNumbers[0] + 1;
     }
 
     this.onSave.emit(this.request);
