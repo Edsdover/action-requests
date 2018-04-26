@@ -230,7 +230,7 @@ export class RequestFormComponent implements OnInit {
     }
 
     if (!this.request.humanReadableCode && this.actionRequestNumbers && this.actionRequestNumbers.length) {
-      this.request.humanReadableCode = this.actionRequestNumbers[0] + 1;
+      this.request.humanReadableCode = this.actionRequestNumbers[0];
     }
 
     this.onSave.emit(this.request);

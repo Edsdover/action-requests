@@ -173,7 +173,7 @@
       <button mat-raised-button
               color="accent"
               (click)="save()"
-              [disabled]="isSaving || !requestForm.form.valid || requestForm.form.disabled"
+              [disabled]="isSaving || !requestForm.form.valid || requestForm.form.disabled || !request.assignee || !request.reporter"
               type="button">
         {{ showBackButton ? 'SAVE' : 'SUBMIT' }}
       </button>
