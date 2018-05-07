@@ -1,7 +1,4 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
   "functions": {
     "predeploy": "yarn --cwd functions firebase:build || true"
   },
