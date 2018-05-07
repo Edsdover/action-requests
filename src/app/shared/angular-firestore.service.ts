@@ -11,7 +11,12 @@ export class AngularFirestoreService {
   // current timestamp (Unix epoch, in milliseconds) as determined server-side by Firebase
   timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+    // TODO: remove once Firebase deprecates Timestamp -> Date conversion
+    // https://github.com/angular/angularfire2/issues/1575
+    afs.firestore.settings({ timestampsInSnapshots: true });
+    afs.firestore.enablePersistence();
+  }
 
   collection<T>(databasePath: string, queryFn?: QueryFn): Observable<T[]> {
     const query = queryFn || this.limit;

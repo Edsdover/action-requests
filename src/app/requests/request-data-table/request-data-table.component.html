@@ -45,7 +45,7 @@
       <ng-container matColumnDef="createdAt">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
         <mat-cell *matCellDef="let actionRequest">
-          {{ actionRequest.createdAt | date:'shortDate' }}
+          {{ actionRequest.createdAt.toDate() | date:'shortDate' }}
         </mat-cell>
       </ng-container>
 
@@ -53,7 +53,7 @@
       <ng-container matColumnDef="createdAtVerbose">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
         <mat-cell *matCellDef="let actionRequest">
-          {{ actionRequest.createdAt | date:'mediumDate' }} {{ actionRequest.createdAt | date:'shortTime' | lowercase }}
+          {{ actionRequest.createdAt.toDate() | date:'mediumDate' }} {{ actionRequest.createdAt.toDate() | date:'shortTime' | lowercase }}
         </mat-cell>
       </ng-container>
 

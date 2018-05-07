@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild, NgZone } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/observable/from';
@@ -92,17 +92,22 @@ export class RequestFormComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private route: ActivatedRoute,
     private location: Location,
+    private ngZone: NgZone,
     private uploadService: UploadService
   ) { }
 
   ngOnInit() {
-    const tick = interval(3000); // run check every 3 seconds
-    const subscription = tick.subscribe(() => {
-      if (this.currentUpload && this.currentUpload.progress === 100) {
-        setTimeout(() => {
-          this.currentUpload = undefined;
-        }, 3500);
-      }
+    this.ngZone.runOutsideAngular(() => {
+      const tick = interval(3000); // run check every 3 seconds
+      const subscription = tick.subscribe(() => {
+        if (this.currentUpload && this.currentUpload.progress === 100) {
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              this.currentUpload = undefined;
+            });
+          }, 3500);
+        }
+      });
     });
 
     this.actionRequestService.getActionRequests(250).subscribe(actionRequests => {
@@ -160,6 +165,10 @@ export class RequestFormComponent implements OnInit {
   }
 
   droppedFiles(event: UploadEvent): void {
+    if (!this.currentUpload) {
+      this.currentUpload = { progress: 1 } as Upload;
+    }
+
     for (const droppedFile of event.files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;

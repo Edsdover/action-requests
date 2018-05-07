@@ -7,7 +7,7 @@
       </mat-icon>
     </mat-card-title>
     <mat-card-subtitle>
-      {{ request.createdAt | date:'mediumDate' }} {{ request.createdAt | date:'shortTime' | lowercase }}
+      {{ request.createdAt.toDate() | date:'mediumDate' }} {{ request.createdAt.toDate() | date:'shortTime' | lowercase }}
     </mat-card-subtitle>
   </mat-card-title-group>
   <mat-card-content>

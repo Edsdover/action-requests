@@ -38,7 +38,7 @@ import { XlsxService } from './shared/xlsx.service';
   imports: [
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     BrowserAnimationsModule,
