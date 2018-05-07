@@ -14,7 +14,8 @@
     "firebase:build-production": "yarn && ng build --aot --build-optimizer --prod --service-worker && yarn functions:build",
     "firebase:deploy": "yarn firebase:build && firebase deploy --project staging",
     "firebase:deploy-production": "yarn firebase:build-production && firebase deploy --project production",
-    "functions:build": "cd functions && yarn firebase:build && cd .."
+    "functions:build": "cd functions && yarn firebase:build && cd ..",
+    "analyze": "yarn && ng build --aot --stats-json && webpack-bundle-analyzer dist/stats.json"
   },
   "dependencies": {
     "@angular/animations": "5.2.10",
@@ -62,6 +63,7 @@
     "protractor": "5.2.2",
     "ts-node": "3.3.0",
     "tslint": "5.8.0",
-    "typescript": "2.5.3"
+    "typescript": "2.5.3",
+    "webpack-bundle-analyzer":"2.11.1"
   }
 }
