@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, ViewChild, NgZone } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, NgZone, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/observable/from';
@@ -89,6 +89,7 @@ export class RequestFormComponent implements OnInit {
 
   constructor(
     private actionRequestService: ActionRequestService,
+    private app: ApplicationRef,
     private ref: ChangeDetectorRef,
     private route: ActivatedRoute,
     private location: Location,
@@ -107,6 +108,9 @@ export class RequestFormComponent implements OnInit {
             });
           }, 3500);
         }
+        this.ngZone.run(() => {
+          this.app.tick();
+        });
       });
     });
 
