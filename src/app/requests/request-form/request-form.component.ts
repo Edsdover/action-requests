@@ -98,20 +98,29 @@ export class RequestFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.ngZone.runOutsideAngular(() => {
-      const tick = interval(3000); // run check every 3 seconds
-      const subscription = tick.subscribe(() => {
-        if (this.currentUpload && this.currentUpload.progress === 100) {
-          setTimeout(() => {
-            this.ngZone.run(() => {
-              this.currentUpload = undefined;
-            });
-          }, 3500);
-        }
-        this.ngZone.run(() => {
-          this.app.tick();
-        });
-      });
+    // this.ngZone.runOutsideAngular(() => {
+    //   const tick = interval(3000); // run check every 3 seconds
+    //   const subscription = tick.subscribe(() => {
+    //     if (this.currentUpload && this.currentUpload.progress === 100) {
+    //       setTimeout(() => {
+    //         this.ngZone.run(() => {
+    //           this.currentUpload = undefined;
+    //         });
+    //       }, 3500);
+    //     }
+    //     this.ngZone.run(() => {
+    //       this.app.tick();
+    //     });
+    //   });
+    // });
+    const tick = interval(3000); // run check every 3 seconds
+    const subscription = tick.subscribe(() => {
+      if (this.currentUpload && this.currentUpload.progress === 100) {
+        setTimeout(() => {
+          this.currentUpload = undefined;
+        }, 3500);
+      }
+      this.app.tick();
     });
 
     this.actionRequestService.getActionRequests(250).subscribe(actionRequests => {
@@ -170,7 +179,7 @@ export class RequestFormComponent implements OnInit {
 
   droppedFiles(event: UploadEvent): void {
     if (!this.currentUpload) {
-      this.currentUpload = { progress: 1 } as Upload;
+      this.currentUpload = { progress: 0 } as Upload;
     }
 
     for (const droppedFile of event.files) {
