@@ -1,5 +1,7 @@
 import { Location } from '@angular/common';
-import { ApplicationRef, ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, NgZone, ViewChild } from '@angular/core';
+import {
+  ApplicationRef, ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit, NgZone, ViewChild, OnChanges, DoCheck
+} from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/observable/from';
@@ -8,7 +10,8 @@ import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/concatMap';
 import { Observable } from 'rxjs/Observable';
 import { interval } from 'rxjs/observable/interval';
-import { map, startWith } from 'rxjs/operators';
+import { range } from 'rxjs/observable/range';
+import { delay, map, startWith, take } from 'rxjs/operators';
 import { FileSystemFileEntry, UploadEvent } from 'ngx-file-drop';
 
 import { environment } from '../../../environments/environment';
@@ -20,7 +23,8 @@ import { ActionRequest, ActionRequestService } from '../shared';
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.css']
 })
-export class RequestFormComponent implements OnInit {
+export class RequestFormComponent implements OnInit, DoCheck {
+  clearInProgress = false;
   debug: Observable<string>;
   env = environment;
   increment: any = '...';
@@ -98,31 +102,6 @@ export class RequestFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.ngZone.runOutsideAngular(() => {
-    //   const tick = interval(3000); // run check every 3 seconds
-    //   const subscription = tick.subscribe(() => {
-    //     if (this.currentUpload && this.currentUpload.progress === 100) {
-    //       setTimeout(() => {
-    //         this.ngZone.run(() => {
-    //           this.currentUpload = undefined;
-    //         });
-    //       }, 3500);
-    //     }
-    //     this.ngZone.run(() => {
-    //       this.app.tick();
-    //     });
-    //   });
-    // });
-    const tick = interval(3000); // run check every 3 seconds
-    const subscription = tick.subscribe(() => {
-      if (this.currentUpload && this.currentUpload.progress === 100) {
-        setTimeout(() => {
-          this.currentUpload = undefined;
-        }, 3500);
-      }
-      this.app.tick();
-    });
-
     this.actionRequestService.getActionRequests(250).subscribe(actionRequests => {
       this.actionRequestNumbers = Array.from(new Set(actionRequests
         .map(actionRequest => actionRequest.humanReadableCode || null)
@@ -156,11 +135,25 @@ export class RequestFormComponent implements OnInit {
         map(val => this.filterReporters(val))
       );
 
+    this.reloadPageEvery30Minutes();
+
+    // this.app.isStable.subscribe((isStable) => console.log('isStable', isStable));
+
     this.debug = this.route
       .queryParamMap
       .pipe(
         map(params => params.get('debug'))
       );
+  }
+
+  ngDoCheck(): void {
+    if (!this.clearInProgress && this.currentUpload && this.currentUpload.progress === 100) {
+      this.clearInProgress = true;
+      setTimeout(() => {
+        this.currentUpload = undefined;
+        this.clearInProgress = false;
+      }, 3500);
+    }
   }
 
   filterAssignees(val: string): string[] {
@@ -178,6 +171,8 @@ export class RequestFormComponent implements OnInit {
   }
 
   droppedFiles(event: UploadEvent): void {
+    this.refreshFor90seconds();
+
     if (!this.currentUpload) {
       this.currentUpload = { progress: 0 } as Upload;
     }
@@ -188,6 +183,43 @@ export class RequestFormComponent implements OnInit {
         fileEntry.file((file: File) => this.uploadFile(file));
       }
     }
+  }
+
+  reloadPageEvery30Minutes(): void {
+    this.ngZone.runOutsideAngular(() => {
+      const tick = interval(30 * 60 * 1000).pipe(take(1));
+      tick.subscribe(() => {
+        location.reload();
+      });
+    });
+  }
+
+  refreshFor90seconds(): void {
+    // run check every 3 seconds for 90 seconds
+    const tick = interval(3000).pipe(take(30));
+
+    const subscription = tick.subscribe(() => {
+      this.app.tick();
+      if (!this.currentUpload) {
+        subscription.unsubscribe();
+      }
+    });
+
+    // this.ngZone.runOutsideAngular(() => {
+    //   const tick = interval(3000); // run check every 3 seconds
+    //   const subscription = tick.subscribe(() => {
+    //     if (this.currentUpload && this.currentUpload.progress === 100) {
+    //       setTimeout(() => {
+    //         this.ngZone.run(() => {
+    //           this.currentUpload = undefined;
+    //         });
+    //       }, 3500);
+    //     }
+    //     this.ngZone.run(() => {
+    //       this.app.tick();
+    //     });
+    //   });
+    // });
   }
 
   processFiles(event): void {
