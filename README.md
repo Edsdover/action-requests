@@ -80,25 +80,11 @@ generate a new component (shorthand: `ng g c <component-name>`). You can also us
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use `--aot --prod --build-optimizer` flags for production builds.
 
-#### Building for iPad
-
-```javascript
-if (event.request.url.indexOf('upload') !== -1) { return; }
-```
-
-```shell
-yarn firebase:build-production
-vim dist/ngsw-worker.js
-firebase deploy --project production
-```
-
-For more details.
-
-<https://github.com/angular/angular/issues/21191#issuecomment-360051276>
-
 ## Deploying to Firebase
 
-Run `yarn run firebase:deploy` to deploy a production build to Firebase.
+Run `yarn deploy` to deploy a development build to Firebase.
+
+Run `yarn deploy:production` to deploy a production build to Firebase.
 
 ## Running unit tests
 

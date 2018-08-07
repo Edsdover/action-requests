@@ -10,12 +10,13 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "firebase:build": "yarn && ng build --aot --build-optimizer && yarn functions:build",
-    "firebase:build-production": "yarn && ng build --aot --build-optimizer --prod --service-worker && yarn functions:build",
-    "firebase:deploy": "yarn firebase:build && firebase deploy --project staging",
-    "firebase:deploy-production": "yarn firebase:build-production && firebase deploy --project production",
+    "firebase:build": "yarn && ng build --aot --build-optimizer && yarn functions:build && yarn patch:ngsw",
+    "firebase:build:production": "yarn && ng build --aot --build-optimizer --prod --service-worker && yarn functions:build && yarn patch:ngsw",
+    "deploy": "yarn firebase:build && firebase deploy --project staging",
+    "deploy:production": "yarn firebase:build:production && firebase deploy --project production",
     "functions:build": "cd functions && yarn firebase:build && cd ..",
-    "analyze": "yarn && ng build --aot --stats-json && webpack-bundle-analyzer dist/stats.json"
+    "analyze": "yarn && ng build --aot --stats-json && webpack-bundle-analyzer dist/stats.json",
+    "patch:ngsw": "node ./tools/patch/ngsw-worker-patch.js"
   },
   "dependencies": {
     "@angular/animations": "5.2.10",

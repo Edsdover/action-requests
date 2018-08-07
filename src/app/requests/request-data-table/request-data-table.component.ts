@@ -84,8 +84,8 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'createdAt': return new Date(item.createdAt);
-        case 'createdAtVerbose': return new Date(item.createdAt);
+        case 'createdAt': return item.createdAt.toMillis();
+        case 'createdAtVerbose': return item.createdAt.toMillis();
         default: return item[property];
       }
     };
