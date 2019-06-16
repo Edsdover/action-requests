@@ -117,8 +117,8 @@ export class RequestDataTableComponent implements OnInit, AfterViewInit {
       return {
         'No.': actionRequest.humanReadableCode,
         'Sales Order': actionRequest.salesOrderNumber,
-        'Created': actionRequest.createdAt,
-        'Updated': actionRequest.updatedAt,
+        'Created': actionRequest.createdAt.toDate(),
+        'Updated': actionRequest.updatedAt.toDate(),
         'Reporter': actionRequest.reporter,
         'Assignee': actionRequest.assignee,
         'Category': this.titlecase(actionRequest.category),
